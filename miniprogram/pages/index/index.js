@@ -7,7 +7,8 @@ Page({
     logged: false,
     takeSession: false,
     requestResult: '',
-    src:''
+    src:'',
+    token:''
   },
 
   onLoad: function() {
@@ -18,7 +19,7 @@ Page({
       return
     }
     // 获取token信息
-    // this.getFaceToken();
+    this.getFaceToken();
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -55,15 +56,11 @@ Page({
       success: res => {
         console.log('[云函数] [login] user openid: ', res.result.openid)
         app.globalData.openid = res.result.openid
-        wx.navigateTo({
-          url: '../userConsole/userConsole',
-        })
+        
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
-        wx.navigateTo({
-          url: '../deployFunctions/deployFunctions',
-        })
+        
       }
     })
   },
@@ -122,7 +119,9 @@ Page({
     wx.request({
       url: 'https://aip.baidubce.com/oauth/2.0/token?grant_type=client_credentials&client_id=2g1hYrTKeiAXAl9NItSzVYZn&client_secret=AkIR7SP9oK4Cn0fNK3Z2BzGtB6TKjeif',
       success: res => {
-        console.info(res,'face')
+        this.setData({
+          token:res.data.access_token
+        })
       },
       fail: err => {
         console.info(err,'face')
@@ -133,17 +132,34 @@ Page({
   takePhoto:function(){
     const ctx = wx.createCameraContext()
     let self = this;
-    console.info('click')
+    console.info('click', this.data.token)
     ctx.takePhoto({
-      quality:'high',
+      quality:'low',
       success: res =>{
         self.setData({
           src: res.tempImagePath
         })
-        console.info(res.tempImagePath)
+        const img = wx.getFileSystemManager().readFileSync(res.tempImagePath, "base64");
+        this.aliveTest(img)
       },
       fail: err =>{
         console.info(err)
+      }
+    })
+  },
+  // 活体检测https://aip.baidubce.com/rest/2.0/face/v3/faceverify
+  aliveTest: function(base64){
+    let url ='https://aip.baidubce.com/rest/2.0/face/v3/faceverify?access_token=' + this.data.token;
+    let data = [{ 'image': base64,'image_type' : 'BASE64'}]
+    wx.request({
+      url: url,
+      method: 'POST',
+      data: JSON.stringify(data),
+      success: res => {
+        console.info(res,'success')
+      },
+      fail: err => {
+        console.info(err,'fail')
       }
     })
   }
