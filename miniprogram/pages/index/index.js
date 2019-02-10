@@ -8,7 +8,9 @@ Page({
     takeSession: false,
     requestResult: '',
     src:'',
-    token:''
+    token:'',
+    showBool:'none',
+    userGroupName:''
   },
 
   onLoad: function() {
@@ -140,7 +142,7 @@ Page({
           src: res.tempImagePath
         })
         const img = wx.getFileSystemManager().readFileSync(res.tempImagePath, "base64");
-        this.aliveTest(img)
+        this.faceRec(img)
       },
       fail: err =>{
         console.info(err)
@@ -162,5 +164,94 @@ Page({
         console.info(err,'fail')
       }
     })
-  }
+  },
+  //人脸识别/搜索
+  faceRec: function (base64) {
+    let url = 'https://aip.baidubce.com/rest/2.0/face/v3/search?access_token=' + this.data.token;
+    let data = { 
+      'image': base64, 
+      'image_type': 'BASE64', 
+      'group_id_list': 'aab', 
+      'liveness_control':'NORMAL',
+      'user_id':'test1' 
+    }
+    wx.request({
+      url: url,
+      method: 'POST',
+      data: JSON.stringify(data),
+      success: res => {
+        console.info(res, 'success')
+      },
+      fail: err => {
+        console.info(err, 'fail')
+      }
+    })
+  },
+  //人脸库appid: 15522831  创建人脸库中的用户组
+  showCre:function(){
+    if(this.data.showBool === 'none'){
+      this.setData({
+        showBool : ''
+      })
+    }else{
+      this.setData({
+        showBool : 'none'
+      })
+    }
+  },
+  inputedit: function (e) {
+    let string = e.detail.value
+    this.setData({
+      userGroupName:string
+    })
+  },
+  creGroup:function(){
+    console.info(this.data.userGroupName)
+    if (!this.data.userGroupName) return;
+    let name = this.data.userGroupName;
+    let url = 'https://aip.baidubce.com/rest/2.0/face/v3/faceset/group/add?access_token=' + this.data.token;
+    let data = { 'group_id': name}
+    wx.request({
+      url: url,
+      method: 'POST',
+      data: JSON.stringify(data),
+      success: res => {
+        console.info(res, 'success')
+        this.showCre()
+      },
+      fail: err => {
+        console.info(err, 'fail')
+      }
+    })
+  },
+  //注册人脸
+  signUpFace: function () {
+    const ctx = wx.createCameraContext()
+    let self = this;
+    ctx.takePhoto({
+      quality: 'low',
+      success: res => {
+        self.setData({
+          src: res.tempImagePath
+        })
+        const img = wx.getFileSystemManager().readFileSync(res.tempImagePath, "base64");
+        let url = 'https://aip.baidubce.com/rest/2.0/face/v3/faceset/user/add?access_token=' + this.data.token;
+        let data = { 'image': img, 'image_type': 'BASE64', 'group_id': 'aab', 'user_id': 'test1' }
+        wx.request({
+          url: url,
+          method: 'POST',
+          data: JSON.stringify(data),
+          success: res => {
+            console.info(res, 'success')
+          },
+          fail: err => {
+            console.info(err, 'fail')
+          }
+        })
+      },
+      fail: err => {
+        console.info(err)
+      }
+    })
+  },
 })
