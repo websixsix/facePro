@@ -1,0 +1,27 @@
+<!--miniprogram/pages/signup/index.wxml-->
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="name" style='display:flex;flex-direction:row'>
+    <label>姓名：</label>
+    <input value="{{form.name}}" bindinput='inputedit' data-name='name'></input>
+  </view>
+  <view class="studentId" style='display:flex;flex-direction:row'>
+    <label>学号：</label>
+    <input value="{{form.id}}" bindinput='inputedit' data-name='studentId'></input>
+  </view>
+  <view class="groupId" style='display:flex;flex-direction:row'>
+    <label>分组名：</label>
+    <input value="{{form.group_id}}" bindinput='inputedit' data-name='groupId'></input>
+  </view>
+  <view class="secret" style='display:flex;flex-direction:row'>
+    <label>注册码：</label>
+    <input value="{{secret}}" bindinput='inputedit' data-name='secret'></input>
+  </view>
+  <view class="openId" style='display:flex;flex-direction:row'>
+    <label>openid：</label>
+    <input disabled="true" password="true" bindinput='inputedit' value="{{form.openId}}"></input>
+  </view>
+  <view class="btn-area">
+    <button form-type="submit" type="primary">下一步</button>
+    <button form-type="reset">重置</button>
+  </view>
+</form>

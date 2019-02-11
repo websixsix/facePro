@@ -1,12 +1,15 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/index/index",
+    "pages/main/index",
+    "pages/signup/index",
+    "pages/signupface/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
+    "navigationBarTitleText": "人脸识别系统及应用",
     "navigationBarTextStyle": "black"
   }
 }

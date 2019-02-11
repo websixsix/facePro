@@ -1,0 +1,12 @@
+/* miniprogram/pages/signup/index.wxss */
+
+view {
+  margin: 20px 20px;
+}
+input {
+  border: 1px #000000 solid;
+  border-radius: 5px;
+}
+button {
+  margin-top: 20px;
+}
