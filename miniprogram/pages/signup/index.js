@@ -10,7 +10,7 @@ Page({
       name:'',
       studentId:'',
       groupId:'',
-      openId:''
+      openId: ''
     },
     secret:''
   },
@@ -19,33 +19,30 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    if (!wx.cloud) {
-      wx.showToast({
-        title: 'openID获取失败',
-        icon: 'none',
-        duration: 2000
-      })
-      return
-    }
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        app.globalData.openid = res.result.openid
+    this.setData({
+      form:{
+        openId: app.globalData.openid
+      }
+    })
+    const db = wx.cloud.database()
+    db.collection('facetest').doc(app.globalData.openid).get({
+      success(res) {
+        // res.data 包含该记录的数据
         wx.showToast({
-          title: 'openID获取成功',
-          icon: 'success',
-          duration: 2000
-        })
-        this.setData({
-          form:{
-            openId: res.result.openid
+          title: '该微信号已注册',
+          icon:'none',
+          duration:2000,
+          success: res =>{
+            setTimeout(function(){
+              wx.navigateTo({
+                url: '../index/index',
+              })
+            }, 2000)
           }
         })
       },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
+      fail: (err) => {
+        console.info('可以注册')
       }
     })
   },

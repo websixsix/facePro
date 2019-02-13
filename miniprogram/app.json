@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/main/index",
     "pages/signup/index",
-    "pages/signupface/index"
+    "pages/signupface/index",
+    "pages/signin/index",
+    "pages/userinfo/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

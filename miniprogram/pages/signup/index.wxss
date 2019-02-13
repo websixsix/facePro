@@ -1,11 +1,18 @@
 /* miniprogram/pages/signup/index.wxss */
 
+page{
+  font-size: 20px;
+}
 view {
   margin: 20px 20px;
+}
+label{
+  padding-top: 14px;
 }
 input {
   border: 1px #000000 solid;
   border-radius: 5px;
+  height: 60px;
 }
 button {
   margin-top: 20px;

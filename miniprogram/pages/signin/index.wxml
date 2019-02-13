@@ -1,0 +1,6 @@
+<!--miniprogram/pages/signin/index.wxml-->
+  <view class="uploader">
+      <text>请将脸部正对摄像头，当即开始验证</text>
+  </view>
+
+  <camera device-position="front" flash="off" binderror="error" style="width: 100%; height: 400px;"></camera>

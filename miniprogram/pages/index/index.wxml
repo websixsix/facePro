@@ -2,13 +2,15 @@
 
 <view class="contain">
   <view class="signUp">
-    <text>如果没有账号，请点击</text>
+    <text>如果没有账号，请点击↓</text>
     <navigator url="../signup/index">
-      <button>注册</button>
+      <button>人脸信息注册</button>
     </navigator>
   </view>
   <view class="signIn">
-    <text>如果已有账号，请点击</text>
-    <button type="primary">登录</button>
+    <text>如果已有账号，请点击↓</text>
+    <navigator url="../signin/index">
+      <button type="primary">人脸验证登录</button>
+    </navigator>
   </view>
 </view>

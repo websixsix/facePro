@@ -1,0 +1,2 @@
+<!--miniprogram/pages/userinfo/index.wxml-->
+<text>欢迎您，亲爱的{{name}}</text>

@@ -18,7 +18,7 @@
   </view>
   <view class="openId" style='display:flex;flex-direction:row'>
     <label>openid：</label>
-    <input disabled="true" password="true" bindinput='inputedit' value="{{form.openId}}"></input>
+    <input disabled="true" password="true" value="{{form.openId}}"></input>
   </view>
   <view class="btn-area">
     <button form-type="submit" type="primary">下一步</button>
