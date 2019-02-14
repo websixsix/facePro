@@ -1,33 +1,26 @@
 const app = getApp()
-// miniprogram/pages/signin/index.js
+const db = wx.cloud.database()
+// miniprogram/pages/verifypage/index.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    openId:'',
-    groupId:'',
-    studentId:''
+    groupId: '',
+    studentId: '',
+    name:''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let self = this
-    const db = wx.cloud.database()
-    db.collection('facetest').doc(app.globalData.openid).get({
-      success(res) {
-        // res.data 包含该记录的数据
-        self.setData({
-          groupId: res.data['group_id'],
-          studentId: res.data['student_id']
-        })
-      },
-      fail:(err)=>{
-        console.info(err)
-      }
+    let obj = wx.getStorageSync('verify')
+    this.setData({
+      name: obj.name,
+      groupId: obj.group_id,
+      studentId: obj.student_id
     })
   },
 
@@ -35,7 +28,8 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    setTimeout(this.takePhoto,5000)
+    // this.up2Record()
+    setTimeout(this.takePhoto, 5000)
   },
   //打开摄像头
   takePhoto: function () {
@@ -47,7 +41,7 @@ Page({
         wx.compressImage({
           src: res.tempImagePath, // 图片路径
           quality: 80, // 压缩质量
-          success(resp){
+          success(resp) {
             console.info(res)
             let base = wx.getFileSystemManager().readFileSync(resp.tempFilePath, "base64")
             console.info(base.length)
@@ -111,23 +105,13 @@ Page({
       success: res => {
         wx.hideLoading()
         console.info(res, 'success')
-        if(res.data.error_code === 0){
+        if (res.data.error_code === 0) {
           let score = res.data.result.user_list[0].score
           if (score >= 80) {
-            wx.showToast({
-              title: '登录成功',
-              icon: 'success',
-              success(){
-                setTimeout(()=>{
-                  wx.navigateTo({
-                    url: '../userinfo/index',
-                  })
-                },1500)
-              }
-            })
+            self.up2Record()
           } else {
             wx.showModal({
-              title: '登录失败',
+              title: '考勤失败',
               content: '人脸不匹配',
               showCancel: false, //不显示取消按钮
               confirmText: '确定',
@@ -136,21 +120,53 @@ Page({
               }
             })
           }
-        }else{
+        } else {
           wx.showModal({
-            title: '登录失败',
-            content: '未检测到人脸',
+            title: '考勤失败',
+            content: '未知原因，请联系管理员',
             showCancel: false, //不显示取消按钮
-            confirmText: '确定',
-            success(res) {
-              self.takePhoto()
-            }
+            confirmText: '确定'
           })
         }
       },
       fail: err => {
         console.info(err, 'fail')
+        wx.showModal({
+          title: '考勤失败',
+          content: '接口调用失败，请联系管理员',
+          showCancel: false, //不显示取消按钮
+          confirmText: '确定'
+        })
       }
     })
   },
+  //把考勤记录传入数据库verifyrecord
+  up2Record: function () {
+    db.collection('verifyrecord').add({
+      // data 字段表示需新增的 JSON 数据
+      data: {
+        group_id: this.data.groupId,
+        name: this.data.name,
+        student_id: this.data.studentId,
+        date: new Date(),
+      },
+      success(res) {
+        // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
+        console.log(res)
+        //跳转至最初页面
+        wx.showToast({
+          title: '考勤成功',
+          icon: 'success',
+          success() {
+            setTimeout(() => {
+              wx.navigateBack({
+                delta: 1,
+              })
+            }, 1500)
+          }
+        })
+      },
+      fail: console.error
+    })
+  }
 })

@@ -5,7 +5,9 @@
     "pages/signup/index",
     "pages/signupface/index",
     "pages/signin/index",
-    "pages/userinfo/index"
+    "pages/userinfo/index",
+    "pages/verifypage/index",
+    "pages/recordtext/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

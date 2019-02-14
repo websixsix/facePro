@@ -1,2 +1,16 @@
 <!--miniprogram/pages/userinfo/index.wxml-->
 <text>欢迎您，亲爱的{{name}}</text>
+<view wx:if="{{limit}}">
+  <text>您负责的学员列表</text>
+  <view class="student-box">
+    <view class="student-item" wx:for="{{groupList}}" wx:for-index="idx" wx:for-item="item" wx:key="*this._id" bindtap='go2verify' data-info="{{item}}">
+      <text>{{item.name}}</text>
+    </view>
+  </view>
+  <navigator url="../recordtext/index">
+    <button type="primary">查看考勤记录</button>
+  </navigator>
+</view>
+<view wx:if="{{!limit}}">
+  <text>您是普通学员，没有权限</text>
+</view>

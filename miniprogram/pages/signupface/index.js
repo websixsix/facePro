@@ -87,6 +87,7 @@ Page({
   },
   //注册人脸
   signUpFace: function (img) {
+    let self = this
     const token = app.globalData.facetoken
     let url = 'https://aip.baidubce.com/rest/2.0/face/v3/faceset/user/add?access_token=' + token;
     let data = {
@@ -108,7 +109,10 @@ Page({
             title: '注册失败',
             content: '请重新注册',
             showCancel: false, //不显示取消按钮
-            confirmText: '确定'
+            confirmText: '确定',
+            success(res) {
+              self.takePhoto()
+            }
           })
           return
         }
@@ -128,7 +132,8 @@ Page({
         _id: this.data.userId, // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
         group_id: this.data.groupId,
         name: this.data.name,
-        student_id: this.data.studentId
+        student_id: this.data.studentId,
+        limit: false
       },
       success(res) {
         // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id

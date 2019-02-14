@@ -10,7 +10,7 @@
 	},
 	"appid": "wxa8e2f241f54fb50e",
 	"projectname": "Facepro",
-	"libVersion": "2.2.5",
+	"libVersion": "2.6.0",
 	"condition": {
 		"search": {
 			"current": -1,

@@ -1,0 +1,5 @@
+<!--miniprogram/pages/recordtext/index.wxml-->
+<text>考勤记录</text>
+<view wx:for="{{recordList}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
+  <text>{{item.name}}在 {{item.date}} 签到</text>
+</view>
