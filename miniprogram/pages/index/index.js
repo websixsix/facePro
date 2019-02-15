@@ -11,6 +11,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    let self = this
     this.getFaceToken()
     if(app.globalData.openid){
       console.info(app.globalData.openid)
@@ -35,6 +36,7 @@ Page({
           icon: 'success',
           duration: 2000
         })
+        // self.resetDb() // 清空数据库的逻辑
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
@@ -44,7 +46,8 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {},
+  onReady: function () {
+  },
   // 获取人脸识别api的token
   getFaceToken: function () {
     wx.request({
@@ -57,4 +60,24 @@ Page({
       }
     })
   },
+  //清空数据库
+  resetDb: function () {
+    // 删除的逻辑
+    wx.cloud.callFunction({
+      name: 'cleardb',
+      data: {
+        openid: app.globalData.openid
+      },
+      success: res => {
+        wx.showToast({
+          title: '删除成功',
+          icon: 'success',
+          success(res){}
+        })
+      },
+      fail: err => {
+        console.info(err)
+      }
+    })
+  }
 })

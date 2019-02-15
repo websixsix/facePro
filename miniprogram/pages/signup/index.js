@@ -1,18 +1,28 @@
 // miniprogram/pages/signup/index.js
 const app = getApp()
+const db = wx.cloud.database()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    form:{
-      name:'',
-      studentId:'',
-      groupId:'',
-      openId: ''
+    form: {
+      name: '',
+      user_id: '',
+      group_id: '',
+      teacher_id: '',
+      character: 'students'
     },
-    secret:''
+    array: ['test1', 'test2', 'test3', 'test4'],
+    index:0,
+    secret:'',
+    characters: [
+      { value: '学生', name: 'students', checked: 'true'},
+      { value: '老师', name: 'teachers'},
+    ],
+    openId: '',
+    text:true
   },
 
   /**
@@ -20,44 +30,52 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      form:{
-        openId: app.globalData.openid
-      }
+      openId: app.globalData.openid
     })
-    const db = wx.cloud.database()
-    db.collection('facetest').doc(app.globalData.openid).get({
+    this.data.form.group_id = this.data.array[this.data.index]
+    this.diffWxOpen('students')
+    this.diffWxOpen('teachers')
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  },
+  // 校验该微信号是否已注册
+  diffWxOpen: function (dbName) {
+    // 搜索学生库
+    db.collection(dbName).where({
+      _openid: this.data.openId
+    }).get({
       success(res) {
         // res.data 包含该记录的数据
         wx.showToast({
           title: '该微信号已注册',
-          icon:'none',
-          duration:2000,
-          success: res =>{
-            setTimeout(function(){
+          icon: 'none',
+          duration: 2000,
+          success: res => {
+            setTimeout(function () {
               wx.navigateTo({
                 url: '../index/index',
               })
             }, 2000)
           }
         })
-      },
-      fail: (err) => {
-        console.info('可以注册')
       }
     })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {},
   // 跳转到人脸注册页面
   formSubmit:function () {
     if(this.data.form.name&&
-      this.data.form.studentId&&
-      this.data.form.groupId&&
-      this.data.form.openId&&
-      this.data.secret === '1022') {
+      this.data.form.user_id&&
+      this.data.form.group_id&&
+      this.data.openId&&
+      ((this.data.secret === '1022'&&
+      this.data.form.character === "students"&&
+      this.data.form.teacher_id)||
+       (this.data.secret === '1204'&&
+       this.data.form.character === "teachers"))) {
       wx.setStorageSync('sign',this.data.form)
       wx.navigateTo({
         url: '../signupface/index',
@@ -80,5 +98,44 @@ Page({
       return;
     }
     this.data.form[dataset.name] = value;
+  },
+  //老师/学生身份转换
+  radioChange(e) {
+    let value = e.detail.value;
+    this.data.form['character'] = value;
+    let flag = this.data.text
+    if (flag) {
+      this.setData({
+        form: {
+          name: '',
+          user_id: '',
+          group_id: 'teachers',
+          character: 'teachers'
+        },
+        text: !flag,
+        secret: ''
+      })
+    }else{
+      this.setData({
+        form: {
+          name: '',
+          user_id: '',
+          group_id: this.data.array[this.data.index],
+          teacher_id: '',
+          character: 'students'
+        },
+        text: !flag,
+        secret: ''
+      })
+    }
+  },
+  //picker 选择group
+  bindPickerChange: function(e){
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index: e.detail.value
+    },function(){
+      this.data.form.group_id = this.data.array[this.data.index]
+    })
   }
 })

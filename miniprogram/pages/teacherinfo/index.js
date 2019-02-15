@@ -8,13 +8,11 @@ Page({
    * 页面的初始数据
    */
   data: {
-    name:'',
-    group_id:'',
-    limit:false,
-    groupList:[],
-    pageIndex:0,
-    user_id:'',
-    teacher_id:''
+    name: '',
+    group_id: '',
+    groupList: [],
+    pageIndex: 0,
+    user_id: ''
   },
 
   /**
@@ -22,17 +20,14 @@ Page({
    */
   onLoad: function (options) {
     let self = this
-    db.collection('students').where({
+    db.collection('teachers').where({
       _openid: app.globalData.openid,
-      user_id: '1'
     }).get({
       success(res) {
         // res.data 包含该记录的数据
         self.setData({
           name: res.data[0].name,
           group_id: res.data[0].group_id,
-          limit: res.data[0].limit,
-          teacher_id: res.data[0].teacher_id,
           user_id: res.data[0].user_id
         })
         self.loadAll()
@@ -53,31 +48,27 @@ Page({
   show2group: function (page) {
     let self = this
     db.collection('students').where({
-      group_id: self.data.group_id,
-      user_id: _.neq(self.data.user_id),
-      teacher_id: self.data.teacher_id
+      teacher_id: self.data.user_id
     }).skip(page * 20).limit(20)
       .get({
         success(res) {
           // res.data 是包含以上定义的两条记录的数组
           let arr = self.data.groupList
-          for(let i = 0; i< res.data.length; i++){
+          for (let i = 0; i < res.data.length; i++) {
             arr.push(res.data[i])
           }
           self.setData({
             groupList: arr
           })
-          console.log(self.data.groupList,'11')
+          console.log(self.data.groupList)
         }
       })
   },
   //分段加载全部数据
-  loadAll:function () {
+  loadAll: function () {
     let self = this
     db.collection('students').where({
-      group_id: self.data.group_id,
-      user_id: _.neq(self.data.user_id),
-      teacher_id: self.data.teacher_id
+      teacher_id: self.data.user_id
     }).count({
       success(res) {
         let total = res.total
@@ -87,16 +78,36 @@ Page({
       }
     })
   },
-  go2verify: function (e) {
+  setLimit: function (e) {
     let self = this
-    console.info(e.currentTarget.dataset)
-    wx.navigateTo({
-      url: '../verifypage/index',
-      success() {
-        wx.setStorageSync('verify', e.currentTarget.dataset.info)
-      },
-      fail(err){
-        console.info(err)
+    let info = e.currentTarget.dataset.info
+    let name = info.name
+    wx.showModal({
+      title: '提示',
+      content: '将'+name+'设置为组长',
+      success(res) {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '修改中',
+            mask: true
+          })
+          wx.cloud.callFunction({  
+            name: 'changeLimit', 
+            data: info,
+            success: res => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '修改成功',
+                icon: 'success'
+              })
+            },
+            fail: err => {
+              console.info(err)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
       }
     })
   }

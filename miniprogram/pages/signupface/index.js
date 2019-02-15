@@ -1,4 +1,5 @@
-const app =  getApp()
+const app = getApp()
+const db = wx.cloud.database()
 // miniprogram/pages/signupface/index.js
 Page({
 
@@ -6,10 +7,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-    groupId:'',
-    userId:'',
-    name:'',
-    studentId:''
+    form:{},
+    shouCamera:false
   },
 
   /**
@@ -18,10 +17,7 @@ Page({
   onLoad: function (options) {
     let obj = wx.getStorageSync('sign')
     this.setData({
-      name: obj.name,
-      groupId:obj.groupId,
-      userId: obj.openId,
-      studentId: obj.studentId
+      form: obj
     })
   },
 
@@ -29,10 +25,10 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    setTimeout(this.takePhoto,3000)
+    setTimeout(this.takePhoto,2000)
   },
   takePhoto(){
-    const ctx = wx.createCameraContext()
+    const ctx = wx.createCameraContext('face-camera')
     let self = this;
     ctx.takePhoto({
       quality: 'high',
@@ -93,8 +89,8 @@ Page({
     let data = {
       'image': img,
       'image_type': 'FACE_TOKEN',
-      'group_id': this.data.groupId,
-      'user_id': this.data.studentId
+      'group_id': this.data.form.group_id,
+      'user_id': this.data.form.user_id
     }
     wx.request({
       url: url,
@@ -125,16 +121,29 @@ Page({
   },
   //上传至数据库
   up2Info:function(){
-    const db = wx.cloud.database()
-    db.collection('facetest').add({
-      // data 字段表示需新增的 JSON 数据
-      data: {
-        _id: this.data.userId, // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
-        group_id: this.data.groupId,
-        name: this.data.name,
-        student_id: this.data.studentId,
+    let dbName = this.data.form.character
+    let dbData
+    if (dbName === 'students') {
+      dbData = {
+        group_id: this.data.form.group_id,
+        name: this.data.form.name,
+        user_id: this.data.form.user_id,
+        teacher_id: this.data.form.teacher_id,
+        character: this.data.form.character,
         limit: false
-      },
+      }
+    }else{
+      dbData = {
+        // _id: app.globalData.openid, // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
+        group_id: this.data.form.group_id,
+        name: this.data.form.name,
+        user_id: this.data.form.user_id,
+        character: this.data.form.character
+      }
+    }
+    db.collection(dbName).add({
+      // data 字段表示需新增的 JSON 数据
+      data: dbData,
       success(res) {
         // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
         console.log(res)
@@ -144,7 +153,7 @@ Page({
           icon: 'success',
           success() {
             setTimeout(() => {
-              wx.navigateTo({
+              wx.reLaunch({
                 url: '../index/index',
               })
             }, 1500)

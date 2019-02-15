@@ -5,11 +5,7 @@ Page({
   /**
    * 页面的初始数据
    */
-  data: {
-    openId:'',
-    groupId:'',
-    studentId:''
-  },
+  data: {},
 
   /**
    * 生命周期函数--监听页面加载
@@ -17,13 +13,13 @@ Page({
   onLoad: function (options) {
     let self = this
     const db = wx.cloud.database()
-    db.collection('facetest').doc(app.globalData.openid).get({
+    db.collection('students').where({
+      _openid: app.globalData.openid,
+    }).get({
       success(res) {
         // res.data 包含该记录的数据
-        self.setData({
-          groupId: res.data['group_id'],
-          studentId: res.data['student_id']
-        })
+        console.info(res.data[0])
+        self.setData(res.data[0],console.info(self.data))
       },
       fail:(err)=>{
         console.info(err)
@@ -35,11 +31,11 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    setTimeout(this.takePhoto,5000)
+    setTimeout(this.takePhoto,3000)
   },
   //打开摄像头
   takePhoto: function () {
-    const ctx = wx.createCameraContext()
+    const ctx = wx.createCameraContext('face-camera')
     let self = this;
     ctx.takePhoto({
       quality: 'high',
@@ -100,9 +96,9 @@ Page({
     let data = {
       'image': faceToken,
       'image_type': 'FACE_TOKEN',
-      'group_id_list': this.data.groupId,
+      'group_id_list': this.data.group_id,
       'liveness_control': 'NORMAL',
-      'user_id': this.data.studentId
+      'user_id': this.data.user_id
     }
     wx.request({
       url: url,
@@ -119,7 +115,7 @@ Page({
               icon: 'success',
               success(){
                 setTimeout(()=>{
-                  wx.navigateTo({
+                  wx.redirectTo({
                     url: '../userinfo/index',
                   })
                 },1500)

@@ -1,24 +1,38 @@
 <!--miniprogram/pages/signup/index.wxml-->
+<label wx:if="{{openId}}">您的openid获取成功！</label>
+<label wx:if="{{!openId}}">您的openid获取失败，请先打开权限！</label>
+<view>
+  <label>你的身份是：</label>
+  <radio-group class="radio-group" bindchange="radioChange">
+    <label class="radio" wx:for="{{characters}}" wx:key="{{item.value}}">
+      <radio value="{{item.name}}" checked="{{item.checked}}" />
+      {{item.value}}
+    </label>
+  </radio-group>
+</view>
 <form bindsubmit="formSubmit" bindreset="formReset">
   <view class="name" style='display:flex;flex-direction:row'>
     <label>姓名：</label>
     <input value="{{form.name}}" bindinput='inputedit' data-name='name'></input>
   </view>
-  <view class="studentId" style='display:flex;flex-direction:row'>
-    <label>学号：</label>
-    <input value="{{form.id}}" bindinput='inputedit' data-name='studentId'></input>
+  <view class="userId" style='display:flex;flex-direction:row' >
+    <label hidden="{{!text}}">学号：</label><label hidden="{{text}}">工号：</label>
+    <input value="{{form.user_id}}" bindinput='inputedit' data-name='user_id'></input>
   </view>
-  <view class="groupId" style='display:flex;flex-direction:row'>
-    <label>分组名：</label>
-    <input value="{{form.group_id}}" bindinput='inputedit' data-name='groupId'></input>
+  <view class="teacherId" style='display:flex;flex-direction:row' wx:if="{{text}}">
+    <label>教师工号：</label>
+    <input value="{{form.teacher_id}}" bindinput='inputedit' data-name='teacher_id'></input>
   </view>
   <view class="secret" style='display:flex;flex-direction:row'>
     <label>注册码：</label>
-    <input value="{{secret}}" bindinput='inputedit' data-name='secret'></input>
+    <input value="{{secret}}" bindinput='inputedit' data-name='secret' password='true'></input>
   </view>
-  <view class="openId" style='display:flex;flex-direction:row'>
-    <label>openid：</label>
-    <input disabled="true" password="true" value="{{form.openId}}"></input>
+  <view class="groupId" wx:if="{{text}}">
+    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+      <view class="picker">
+        所选分组：{{array[index]}}
+      </view>
+    </picker>
   </view>
   <view class="btn-area">
     <button form-type="submit" type="primary">下一步</button>
