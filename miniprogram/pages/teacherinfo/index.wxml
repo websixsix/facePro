@@ -1,9 +1,14 @@
 <!--miniprogram/pages/teacherinfo/index.wxml-->
 <text>欢迎您，亲爱的{{name}}</text>
 <text>您负责的学员列表</text>
-<view class="student-box">
-  <view class="student-item" wx:for="{{groupList}}" wx:for-index="idx" wx:for-item="item" wx:key="*this._id" bindtap='setLimit' data-info="{{item}}">
-    <text>{{item.name}}</text>
+<view>
+  <view wx:for="{{groupObj}}" wx:for-index="idx" wx:for-item="group" wx:key="idx">
+    <text>分组：{{idx}}</text>
+    <view class="student-box">
+      <view class="student-item" wx:for="{{group}}" wx:for-index="itemidx" wx:for-item="item" wx:key="*this._id" bindtap='setLimit' bindlongpress='deleteStu' data-info="{{item}}">
+        <text>{{item.name}}</text>
+      </view>
+    </view>
   </view>
 </view>
 <navigator url="../recordtext/index">

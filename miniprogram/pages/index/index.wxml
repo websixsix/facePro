@@ -9,10 +9,10 @@
   </view>
   <view class="signIn">
     <text>如果已有账号，请点击↓</text>
-    <navigator url="../userinfo/index">
+    <navigator url="../signin/index">
       <button type="primary">学生登录</button>
     </navigator>
-    <navigator url="../teacherinfo/index">
+    <navigator url="../teacherin/index">
       <button type="primary">教师登录</button>
     </navigator>
   </view>

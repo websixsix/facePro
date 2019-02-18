@@ -49,6 +49,7 @@ Page({
       _openid: this.data.openId
     }).get({
       success(res) {
+        if(res.data.length <= 0) return;
         // res.data 包含该记录的数据
         wx.showToast({
           title: '该微信号已注册',

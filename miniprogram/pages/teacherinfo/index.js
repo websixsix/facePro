@@ -12,7 +12,8 @@ Page({
     group_id: '',
     groupList: [],
     pageIndex: 0,
-    user_id: ''
+    user_id: '',
+    groupObj : {}
   },
 
   /**
@@ -54,11 +55,23 @@ Page({
         success(res) {
           // res.data 是包含以上定义的两条记录的数组
           let arr = self.data.groupList
+          let obj = self.data.groupObj
           for (let i = 0; i < res.data.length; i++) {
-            arr.push(res.data[i])
+            let group = res.data[i]
+            if (!obj[group.group_id]) {
+              obj[group.group_id] = []
+              arr.push(group.group_id)
+              obj[group.group_id].push(group)
+            } else {
+              obj[group.group_id].push(group)
+            }
+          }
+          for(let o in obj){
+            console.info(o)
           }
           self.setData({
-            groupList: arr
+            groupList: arr,
+            groupObj:obj
           })
           console.log(self.data.groupList)
         }
@@ -77,6 +90,20 @@ Page({
         }
       }
     })
+  },
+  // 把不同分组的人分开显示
+  devStudent: function() {
+    let obj1 = {}
+    let group = self.data.groupList
+    for (let i = 0; i < self.data.groupList.length; i++) {
+      if (!obj[group[i]]) {
+        obj[group[i].group_id] = []
+        obj[group[i].group_id].push(group)
+      } else {
+        obj[group[i].group_id].push(group)
+      }
+    }
+    console.info(obj)
   },
   setLimit: function (e) {
     let self = this
@@ -99,6 +126,44 @@ Page({
               wx.showToast({
                 title: '修改成功',
                 icon: 'success'
+              })
+            },
+            fail: err => {
+              console.info(err)
+            }
+          })
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+  deleteStu:function(e) {
+    let self = this
+    let info = e.currentTarget.dataset.info
+    let name = info.name
+    wx.showModal({
+      title: '提示',
+      content: '是否要删除' + name + '同学',
+      success(res) {
+        if (res.confirm) {
+          wx.showLoading({
+            title: '正在删除',
+            mask: true
+          })
+          wx.cloud.callFunction({
+            name: 'clearStu',
+            data: info,
+            success: res => {
+              wx.hideLoading()
+              wx.showToast({
+                title: '删除成功',
+                icon: 'success',
+                success(){
+                  wx.redirectTo({
+                    url: 'index',
+                  })
+                }
               })
             },
             fail: err => {

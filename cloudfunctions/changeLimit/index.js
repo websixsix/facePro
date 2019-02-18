@@ -9,7 +9,8 @@ const _ = db.command
 exports.main = async (event, context) => {
   const wxContext = cloud.getWXContext()
   const stuUpdate = await db.collection('students').where({
-    teacher_id: event.teacher_id
+    teacher_id: event.teacher_id,
+    group_id: event.group_id
   }).update({
     data: {
       limit: false
@@ -19,7 +20,8 @@ exports.main = async (event, context) => {
     }
   });
   const setStu = await db.collection('students').where({
-    user_id: event.user_id
+    user_id: event.user_id,
+    group_id: event.group_id
   }).update({
     data: {
       limit: true
