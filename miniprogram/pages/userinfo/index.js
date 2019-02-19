@@ -24,7 +24,6 @@ Page({
     let self = this
     db.collection('students').where({
       _openid: app.globalData.openid,
-      user_id: '1'
     }).get({
       success(res) {
         // res.data 包含该记录的数据
