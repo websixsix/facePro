@@ -7,7 +7,19 @@ Page({
    */
   data: {
     group_id:'',
-    user_id:''
+    user_id:'',
+    //遮挡范围
+    occlusion:0,
+    //模糊度范围
+    blur:0,
+    //光照范围
+    illumination:0,
+    //人脸置信度
+    face_probability:0,
+    //人脸匹配度
+    score:0,
+    //活体分数值
+    face_liveness:0.00
   },
 
   /**
@@ -21,11 +33,10 @@ Page({
     }).get({
       success(res) {
         // res.data 包含该记录的数据
-        console.info(res.data[0])
         self.setData({
           group_id: res.data[0].group_id,
           user_id: res.data[0].user_id//测试添加  实际应为 _id
-        }, console.info(self.data))
+        })
       },
       fail: (err) => {
         console.info(err)

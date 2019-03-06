@@ -12,7 +12,7 @@
     <navigator url="../signin/index">
       <button type="primary">学生登录</button>
     </navigator>
-    <navigator url="../teacherin/index">
+    <navigator url="../teacherinfo/index">
       <button type="primary">教师登录</button>
     </navigator>
   </view>

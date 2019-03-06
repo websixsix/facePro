@@ -14,3 +14,13 @@
 <navigator url="../allrecord/index">
   <button type="primary">查看考勤记录</button>
 </navigator>
+<view>
+  <view>以下是此次您的人脸信息</view>
+  <view>模糊度范围：</view>
+  <view>光照范围：</view>
+  <view>遮挡范围：</view>
+  <view>人脸完整度：</view>
+  <view>人脸置信度：</view>
+  <view>人脸匹配程度：</view>
+  <view>活体分数值：</view>
+</view>

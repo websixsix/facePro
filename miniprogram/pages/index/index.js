@@ -42,6 +42,10 @@ Page({
         console.error('[云函数] [login] 调用失败', err)
       }
     })
+    this.getLocation();
+  },
+  onShareAppMessage:function(res){
+    console.info(res)
   },
   /**
    * 生命周期函数--监听页面初次渲染完成
@@ -78,6 +82,30 @@ Page({
       fail: err => {
         console.info(err)
       }
+    })
+  },
+  // map test
+  getLocation: function(){
+    wx.getLocation({
+      success: function (res) {
+        type: 'wgs84',
+        console.info(res)
+        wx.request({
+          url: 'https://apis.map.qq.com/ws/coord/v1/translate?locations='+res.latitude+','+res.longitude+'&type=1&key=QBSBZ-QREK3-JMW3N-3PIV4-Y5QNE-DCB4O',
+          success(res1){
+            console.info(res1);
+            let location = res1.data.locations[0]
+            return;
+            var getAddressUrl = "https://apis.map.qq.com/ws/geocoder/v1/?location=" + location.lat + "," + location.lng + "&key=QBSBZ-QREK3-JMW3N-3PIV4-Y5QNE-DCB4O&get_poi=1";
+            wx.request({
+              url: getAddressUrl,
+              success: function (res2) {
+                console.info(res2)
+              }
+            })
+          }
+        })
+      },
     })
   }
 })
