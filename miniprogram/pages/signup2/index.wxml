@@ -40,11 +40,12 @@
   </view>
 </form>
 
+
 <view class="tabbar">
-  <navigator open-type='redirect' url="../signup/index" class="item active">
+  <navigator open-type='redirect' url="../signup/index" class="item">
     学生注册
   </navigator>
-  <navigator open-type='redirect' url="../signup2/index" class="item">
-    老师注册
+  <navigator open-type='redirect' url="../signup2/index" class="item active">
+     老师注册
   </navigator>
 </view>

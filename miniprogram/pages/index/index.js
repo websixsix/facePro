@@ -36,7 +36,6 @@ Page({
           icon: 'success',
           duration: 2000
         })
-        // self.resetDb() // 清空数据库的逻辑
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
@@ -84,7 +83,7 @@ Page({
       }
     })
   },
-  // map test
+  // map test:ok
   getLocation: function(){
     wx.getLocation({
       success: function (res) {

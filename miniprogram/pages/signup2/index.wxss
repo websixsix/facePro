@@ -25,9 +25,6 @@ button {
   width: 40%;
   float: left;
 }
-navigator{
-  display: block;
-}
 .tabbar{
   margin: 0;
   border-top: 1px solid #eeeeee;

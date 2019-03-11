@@ -27,6 +27,7 @@ Page({
   onReady: function () {
     setTimeout(this.takePhoto,2000)
   },
+  // 采集图像并将图像转码为base64
   takePhoto(){
     const ctx = wx.createCameraContext('face-camera')
     let self = this;

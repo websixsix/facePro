@@ -1,18 +1,17 @@
 <!--miniprogram/pages/pageone/pageone.wxml-->
-
 <view class="contain">
   <view class="signUp">
     <text>如果没有账号，请点击↓</text>
-    <navigator url="../signup/index">
+    <navigator open-type='redirect' url="../signup/index">
       <button>人脸信息注册</button>
     </navigator>
   </view>
   <view class="signIn">
     <text>如果已有账号，请点击↓</text>
-    <navigator url="../signin/index">
+    <navigator open-type='redirect' url="../signin/index">
       <button type="primary">学生登录</button>
     </navigator>
-    <navigator url="../teacherinfo/index">
+    <navigator open-type='redirect' url="../teacherinfo/index">
       <button type="primary">教师登录</button>
     </navigator>
   </view>
