@@ -17,12 +17,7 @@ Page({
     array: ['test1', 'test2', 'test3', 'test4'],
     index:0,
     secret:'',
-    characters: [
-      { value: '学生', name: 'students', checked: 'true'},
-      { value: '老师', name: 'teachers'},
-    ],
-    openId: '',
-    text:true
+    openId: ''
   },
 
   /**
@@ -34,7 +29,6 @@ Page({
     })
     this.data.form.group_id = this.data.array[this.data.index]
     // this.diffWxOpen('students')
-    // this.diffWxOpen('teachers')
   },
 
   /**
@@ -49,7 +43,9 @@ Page({
       _openid: this.data.openId
     }).get({
       success(res) {
-        if(res.data.length <= 0) return;
+        if (res.data.length <= 0) {
+          return;
+        }
         // res.data 包含该记录的数据
         wx.showToast({
           title: '该微信号已注册',
@@ -72,11 +68,9 @@ Page({
       this.data.form.user_id&&
       this.data.form.group_id&&
       this.data.openId&&
-      ((this.data.secret === '1022'&&
+      this.data.secret === '1022'&&
       this.data.form.character === "students"&&
-      this.data.form.teacher_id)||
-       (this.data.secret === '1204'&&
-       this.data.form.character === "teachers"))) {
+      this.data.form.teacher_id) {
       wx.setStorageSync('sign',this.data.form)
       wx.navigateTo({
         url: '../signupface/index',
@@ -99,36 +93,6 @@ Page({
       return;
     }
     this.data.form[dataset.name] = value;
-  },
-  //老师/学生身份转换
-  radioChange(e) {
-    let value = e.detail.value;
-    this.data.form['character'] = value;
-    let flag = this.data.text
-    if (flag) {
-      this.setData({
-        form: {
-          name: '',
-          user_id: '',
-          group_id: 'teachers',
-          character: 'teachers'
-        },
-        text: !flag,
-        secret: ''
-      })
-    }else{
-      this.setData({
-        form: {
-          name: '',
-          user_id: '',
-          group_id: this.data.array[this.data.index],
-          teacher_id: '',
-          character: 'students'
-        },
-        text: !flag,
-        secret: ''
-      })
-    }
   },
   //picker 选择group
   bindPickerChange: function(e){

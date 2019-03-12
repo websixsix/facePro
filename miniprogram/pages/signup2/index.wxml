@@ -1,42 +1,30 @@
-<!--miniprogram/pages/signup/index.wxml-->
-<label wx:if="{{openId}}">您的openid获取成功！</label>
-<label wx:if="{{!openId}}">您的openid获取失败，请先打开权限！</label>
+
+<view class="logo">
+  <image src="../../images/team.png"></image>
+  <text>注册</text>
+</view>
+<view class="top-tip" >
+  <text wx:if="{{openId}}">您的openid获取成功！</text>
+  <text class="fail" wx:if="{{!openId}}">您的openid获取失败，请先打开权限！</text>
+</view>
 <view>
-  <!-- <label>你的身份是：</label>
-  <radio-group class="radio-group" bindchange="radioChange">
-    <label class="radio" wx:for="{{characters}}" wx:key="{{item.value}}">
-      <radio value="{{item.name}}" checked="{{item.checked}}" />
-      {{item.value}}
-    </label>
-  </radio-group> -->
 </view>
 <form bindsubmit="formSubmit" bindreset="formReset">
   <view class="name" style='display:flex;flex-direction:row'>
     <label>姓名：</label>
-    <input value="{{form.name}}" bindinput='inputedit' data-name='name'></input>
+    <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='请输入姓名'></input>
   </view>
   <view class="userId" style='display:flex;flex-direction:row' >
-    <label hidden="{{!text}}">学号：</label><label hidden="{{text}}">工号：</label>
-    <input value="{{form.user_id}}" bindinput='inputedit' data-name='user_id'></input>
-  </view>
-  <view class="teacherId" style='display:flex;flex-direction:row' wx:if="{{text}}">
-    <label>教师工号：</label>
-    <input value="{{form.teacher_id}}" bindinput='inputedit' data-name='teacher_id'></input>
+    <label>工号：</label>
+    <input value="{{form.user_id}}" bindinput='inputedit' data-name='user_id' placeholder='请输入工号'></input>
   </view>
   <view class="secret" style='display:flex;flex-direction:row'>
     <label>注册码：</label>
-    <input value="{{secret}}" bindinput='inputedit' data-name='secret' password='true'></input>
-  </view>
-  <view class="groupId" wx:if="{{text}}">
-    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-      <view class="picker">
-        所选分组：{{array[index]}}
-      </view>
-    </picker>
+    <input value="{{secret}}" bindinput='inputedit' data-name='secret' password='true' placeholder='请输入注册码'></input>
   </view>
   <view class="btn-area">
     <button form-type="reset">重置</button>
-    <button form-type="submit" type="primary">下一步</button>
+    <button form-type="submit" class="primary">下一步</button>
   </view>
 </form>
 

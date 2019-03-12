@@ -115,7 +115,7 @@ Page({
               icon: 'success',
               success(){
                 setTimeout(()=>{
-                  wx.redirectTo({
+                  wx.reLaunch({
                     url: '../userinfo/index',
                   })
                 },1500)

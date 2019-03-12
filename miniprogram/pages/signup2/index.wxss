@@ -1,33 +1,92 @@
 /* miniprogram/pages/signup/index.wxss */
 
 page{
-  font-size: 20px;
+  font-size: 15px;
+  color: #666666;
 }
 view {
   margin: 20px 20px;
 }
 form{
   margin-bottom: 70px;
+  display: block;
 }
-label{
-  padding-top: 14px;
+form view{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 1.4rem;
 }
-input {
-  border: 1px #000000 solid;
-  border-radius: 5px;
-  height: 60px;
+form view label{
+  line-height: 1.4rem;
 }
-.btn-area{
+.picker{
   margin: 0;
 }
-button {
-  margin: 20px 20px 20px 20px;
-  width: 40%;
-  float: left;
+input {
+  border-bottom: 1px #2bb5ff solid;
+  padding-left: 30px;
+  flex: 1;
+}
+label{
+  font-size: 15px;
+}
+.btn-area button{
+  margin: 0;
+  height: 2.4rem;
+  line-height: 2.4rem;
+}
+
+.logo{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 15px;
+  padding-bottom:20px; 
+  color:#00a4ff;
+  margin: 0;
+  padding-top: 30px;
+}
+.logo text{
+  text-align: center;
+  width: 100%;
+}
+.logo image{
+  display: block;
+  position: static;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+.top-tip{
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  color: #666666;
+}
+.top-tip .fail{
+  color: red;
+}
+button{
+  width: 70%;
+  margin-top: 10px;
+  color: #00a4ff;
+  border-radius: 30px;
+  border: 1px solid #00a4ff;
+  background-color: #ffffff;
+}
+button.primary{
+  color: #ffffff;
+  background-color: #2bb5ff;
+  border: 1px solid #ffffff;
+}
+navigator{
+  display: block;
 }
 .tabbar{
   margin: 0;
-  border-top: 1px solid #eeeeee;
+  border-top: 1px solid #e3e3e3;
   color: #eeeeee;
   position: fixed;
   bottom: 0;
@@ -36,6 +95,7 @@ button {
   display: flex;
   flex-direction: row;
   flex-wrap:nowrap;
+  background-color: #ffffff;
 }
 .tabbar .item{
   width: 50%;

@@ -11,18 +11,12 @@ Page({
       name: '',
       user_id: '',
       group_id: '',
-      teacher_id: '',
-      character: 'students'
+      character: 'teachers'
     },
     array: ['test1', 'test2', 'test3', 'test4'],
     index: 0,
     secret: '',
-    characters: [
-      { value: '学生', name: 'students', checked: 'true' },
-      { value: '老师', name: 'teachers' },
-    ],
-    openId: '',
-    text: false
+    openId: ''
   },
 
   /**
@@ -33,7 +27,6 @@ Page({
       openId: app.globalData.openid
     })
     this.data.form.group_id = this.data.array[this.data.index]
-    // this.diffWxOpen('students')
     // this.diffWxOpen('teachers')
   },
 
@@ -72,11 +65,8 @@ Page({
       this.data.form.user_id &&
       this.data.form.group_id &&
       this.data.openId &&
-      ((this.data.secret === '1022' &&
-        this.data.form.character === "students" &&
-        this.data.form.teacher_id) ||
-        (this.data.secret === '1204' &&
-          this.data.form.character === "teachers"))) {
+      this.data.secret === '1204' &&
+      this.data.form.character === "teachers") {
       wx.setStorageSync('sign', this.data.form)
       wx.navigateTo({
         url: '../signupface/index',

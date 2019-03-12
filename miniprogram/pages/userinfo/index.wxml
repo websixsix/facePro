@@ -1,16 +1,32 @@
 <!--miniprogram/pages/userinfo/index.wxml-->
-<text>欢迎您，亲爱的{{name}}</text>
+<view class="info-item">
+  <view><image src='../../images/username.png'></image></view>
+  <view class="info-box"> 
+    <view>用户名：{{name}}</view> 
+    <view>{{group_id}}({{user_id}})</view> 
+  </view>
+</view>
 <view wx:if="{{limit}}">
-  <text>您负责的学员列表</text>
-  <view class="student-box">
+  <!-- <text>您负责的学员列表</text>
+  <view  class="info-item"  class="student-box">
     <view class="student-item" wx:for="{{groupList}}" wx:for-index="idx" wx:for-item="item" wx:key="*this._id" bindtap='go2verify' data-info="{{item}}">
       <text>{{item.name}}</text>
     </view>
+  </view> -->
+  <view class="info-item">
+    <view><image src='../../images/look.png'></image></view>
+    <view class="info-box">
+      <view>未考勤0人，已考勤<text style='color:red'>50</text>人</view>
+      <view style="color:#000000">点此查看今日考勤记录</view>
+    </view>
   </view>
   <navigator url="../recordtext/index">
-    <button type="primary">查看考勤记录</button>
+    <button class="primary">查看考勤记录</button>
+  </navigator>
+  <navigator url="../verifypage/index">
+    <button class="primary">开始考勤</button>
   </navigator>
 </view>
-<view wx:if="{{!limit}}">
+<view class="info-item" wx:if="{{!limit}}">
   <text>您是普通学员，没有权限</text>
 </view>

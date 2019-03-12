@@ -132,7 +132,7 @@ Page({
               icon: 'success',
               success() {
                 setTimeout(() => {
-                  wx.redirectTo({
+                  wx.reLaunch({
                     url: '../teacherinfo/index',
                   })
                 }, 1500)

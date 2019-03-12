@@ -1,4 +1,23 @@
 /* miniprogram/pages/userinfo/index.wxss */
+view{
+  color: #00a4ff;
+  text-align: center;
+}
+.info-item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 10px;
+  border-bottom: 1px solid #00a4ff;
+  margin: 0 20px;
+}
+.info-item image{
+  width: 40px;
+  height:40px;
+}
+.info-item .info-box{
+  flex:1;
+}
 .student-box{
   display: flex;
   flex-direction: row;
@@ -10,4 +29,17 @@
   border-radius: 5px;
   margin:10px 10px;
   text-align: center;
+}
+button{
+  width: 70%;
+  margin-top: 10px;
+  color: #00a4ff;
+  border-radius: 30px;
+  border: 1px solid #00a4ff;
+  background-color: #ffffff;
+}
+button.primary{
+  color: #ffffff;
+  background-color: #2bb5ff;
+  border: 1px solid #ffffff;
 }
