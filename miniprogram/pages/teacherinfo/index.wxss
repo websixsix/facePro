@@ -1,4 +1,43 @@
 /* miniprogram/pages/userinfo/index.wxss */
+view{
+  color: #00a4ff;
+  text-align: center;
+}
+.info-item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  padding: 10px;
+  border-bottom: 1px solid #00a4ff;
+  margin: 0 20px;
+}
+.info-item image{
+  width: 40px;
+  height:40px;
+}
+.info-item .info-box{
+  flex:1;
+}
+input {
+  border-bottom: 1px #2bb5ff solid;
+  height: 1.5rem;
+}
+button{
+  width: 70%;
+  margin-top: 10px;
+  color: #00a4ff;
+  border-radius: 30px;
+  border: 1px solid #00a4ff;
+  background-color: #ffffff;
+}
+.src-result{
+  padding: 0 5px;
+  border-bottom: 1px solid #666666;
+}
+.src-result view{
+  text-align: left;
+  color:#666666;
+}
 .student-box{
   display: flex;
   flex-direction: row;

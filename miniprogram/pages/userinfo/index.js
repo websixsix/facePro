@@ -40,6 +40,7 @@ Page({
         console.info(err)
       }
     })
+    app.globalData.sceen = 'student'
   },
 
   /**

@@ -37,6 +37,7 @@ Page({
         console.info(err)
       }
     })
+    app.globalData.sceen = 'teacher';
   },
 
   /**
@@ -175,5 +176,5 @@ Page({
         }
       }
     })
-  }
+  },
 })

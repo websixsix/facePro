@@ -41,10 +41,14 @@ Page({
         console.error('[云函数] [login] 调用失败', err)
       }
     })
+    app.globalData.sceen = 'index';
     this.getLocation();
   },
   onShareAppMessage:function(res){
-    console.info(res)
+    console.info(res);
+    return {
+      title:'aab'
+    }
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

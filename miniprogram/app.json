@@ -11,7 +11,9 @@
     "pages/teacherinfo/index",
     "pages/teacherin/index",
     "pages/allrecord/index",
-    "pages/signup2/index"
+    "pages/signup2/index",
+    "pages/editinfo/index",
+    "pages/crtevent/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",

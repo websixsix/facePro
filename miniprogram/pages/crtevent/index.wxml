@@ -1,0 +1,23 @@
+<!--miniprogram/pages/signup/index.wxml-->
+
+<view class="logo">
+  <image src="../../images/admin.png"></image>
+  <text>发起考勤事件</text>
+</view>
+<form bindsubmit="formSubmit" bindreset="formReset">
+  <view class="name" style='display:flex;flex-direction:row'>
+    <label>考勤原因：</label>
+    <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='请输入考勤原因'></input>
+  </view>
+  <view class="groupId" style='display:flex;flex-direction:row'>
+    <label>专业：</label>
+    <input value="{{groupId}}" bindinput='inputedit' data-name='group_id' placeholder='请输入专业名称'></input>
+  </view>
+  <view class="add">
+    <image src='../../images/add.png'></image>
+  </view>
+  <view class="btn-area">
+    <button form-type="reset">重置</button>
+    <button form-type="submit" class="primary">发起</button>
+  </view>
+</form>

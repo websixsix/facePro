@@ -6,27 +6,65 @@
     <view>{{group_id}}({{user_id}})</view> 
   </view>
 </view>
-<view wx:if="{{limit}}">
   <!-- <text>您负责的学员列表</text>
   <view  class="info-item"  class="student-box">
     <view class="student-item" wx:for="{{groupList}}" wx:for-index="idx" wx:for-item="item" wx:key="*this._id" bindtap='go2verify' data-info="{{item}}">
       <text>{{item.name}}</text>
     </view>
   </view> -->
-  <view class="info-item">
-    <view><image src='../../images/look.png'></image></view>
-    <view class="info-box">
-      <view>未考勤0人，已考勤<text style='color:red'>50</text>人</view>
-      <view style="color:#000000">点此查看今日考勤记录</view>
-    </view>
-  </view>
-  <navigator url="../recordtext/index">
+  <!-- <navigator url="../recordtext/index">
     <button class="primary">查看考勤记录</button>
-  </navigator>
-  <navigator url="../verifypage/index">
+  </navigator> -->
+  <!-- <navigator url="../verifypage/index">
     <button class="primary">开始考勤</button>
+  </navigator> -->
+  
+  <navigator url="../allrecord/index">
+    <view class="info-item">
+      <view><image src='../../images/history.png'></image></view>
+      <view class="info-box">
+        <view>考勤信息</view>
+        <view class="attend-item"> 
+          <view>时间：2019/3/13 10:24</view> 
+          <view>地点：福建省福州市闽侯县福建师范大学旗山校区</view>
+        </view>
+        <view class="attend-item"> 
+          <view>2019/3/12 10:24</view> 
+          <view>福建省福州市闽侯县福建师范大学旗山校区</view>
+        </view>
+        <view class="attend-item"> 
+          <view>2019/3/11 10:24</view> 
+          <view>福建省福州市闽侯县福建师范大学旗山校区</view>
+        </view>
+        <view class="attend-item"> 
+          <view>2019/3/10 10:24</view> 
+          <view>福建省福州市闽侯县福建师范大学旗山校区</view>
+        </view>
+        <view class="attend-item"> 
+          <view>2019/3/9 10:24</view> 
+          <view>福建省福州市闽侯县福建师范大学旗山校区</view>
+        </view>
+        <view class="attend-item"> 
+          <view>2019/3/8 10:24</view> 
+          <view>福建省福州市闽侯县福建师范大学旗山校区</view>
+        </view>
+        <view class="attend-item"> 
+          <view>2019/3/7 10:24</view> 
+          <view>福建省福州市闽侯县福建师范大学旗山校区</view>
+        </view>
+        <view>
+          点击可以查看更多
+        </view>
+      </view>
+    </view>
   </navigator>
-</view>
-<view class="info-item" wx:if="{{!limit}}">
-  <text>您是普通学员，没有权限</text>
-</view>
+  
+  <navigator url="../verifypage/index">
+    <view class="info-item">
+      <view><image src='../../images/full_screen.png'></image></view>
+      <view class="info-box">
+        <view>开始考勤</view>
+      </view>
+    </view>
+  </navigator>
+  

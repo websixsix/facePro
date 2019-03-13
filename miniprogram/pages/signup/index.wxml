@@ -13,6 +13,10 @@
     <label>姓名：</label>
     <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='请输入姓名'></input>
   </view>
+  <view class="groupId" style='display:flex;flex-direction:row'>
+    <label>专业：</label>
+    <input value="{{groupId}}" bindinput='inputedit' data-name='group_id' password='true' placeholder='请输入专业名称'></input>
+  </view>
   <view class="userId" style='display:flex;flex-direction:row' >
     <label>学号：</label>
     <input value="{{form.user_id}}" bindinput='inputedit' data-name='user_id' placeholder='请输入学号'></input>
@@ -24,13 +28,6 @@
   <view class="secret" style='display:flex;flex-direction:row'>
     <label>注册码：</label>
     <input value="{{secret}}" bindinput='inputedit' data-name='secret' password='true' placeholder='请输入注册码'></input>
-  </view>
-  <view class="groupId">
-    <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-      <view class="picker">
-        所选分组：{{array[index]}}
-      </view>
-    </picker>
   </view>
   <view class="btn-area">
     <button form-type="reset">重置</button>

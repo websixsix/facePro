@@ -18,6 +18,10 @@ view{
 .info-item .info-box{
   flex:1;
 }
+.attend-item view{
+  color: #666666;
+  text-align: left;
+}
 .student-box{
   display: flex;
   flex-direction: row;

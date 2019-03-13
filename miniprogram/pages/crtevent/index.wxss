@@ -1,0 +1,97 @@
+/* miniprogram/pages/signup/index.wxss */
+
+page{
+  font-size: 15px;
+  color: #666666;
+}
+view {
+  margin: 20px 20px;
+}
+form{
+  margin-bottom: 70px;
+  display: block;
+}
+form view{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  height: 1.4rem;
+}
+form view label{
+  line-height: 1.4rem;
+}
+.picker{
+  margin: 0;
+}
+input {
+  border-bottom: 1px #2bb5ff solid;
+  padding-left: 30px;
+  flex: 1;
+}
+label{
+  font-size: 15px;
+}
+.btn-area button{
+  margin: 0;
+  height: 2.4rem;
+  line-height: 2.4rem;
+}
+.add{
+  border: 1px dashed #00a4ff;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.add image{
+  width: 20px;
+  height: 20px;
+  margin-top:10px;
+}
+.logo{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 15px;
+  padding-bottom:20px; 
+  color:#00a4ff;
+  margin: 0;
+  padding-top: 30px;
+}
+.logo text{
+  text-align: center;
+  width: 100%;
+}
+.logo image{
+  display: block;
+  position: static;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+.top-tip{
+  width: 100%;
+  margin: 0;
+  text-align: center;
+  color: #666666;
+}
+.top-tip .fail{
+  color: red;
+}
+button{
+  width: 70%;
+  margin-top: 10px;
+  color: #00a4ff;
+  border-radius: 30px;
+  border: 1px solid #00a4ff;
+  background-color: #ffffff;
+}
+button.primary{
+  color: #ffffff;
+  background-color: #2bb5ff;
+  border: 1px solid #ffffff;
+}
+navigator{
+  display: block;
+}
