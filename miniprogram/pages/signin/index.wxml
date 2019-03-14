@@ -1,7 +1,7 @@
 <!--miniprogram/pages/signin/index.wxml-->
 
   <view class="logo">
-    <image src="../../images/facetest.png"></image>
+    <image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/facetest.png"></image>
     <text>学生人脸识别</text>
   </view>
 

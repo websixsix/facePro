@@ -1,1 +1,29 @@
-/* miniprogram/pages/verifypage/index.wxss */
+/* miniprogram/pages/signupface/index.wxss */
+view{
+  text-align: center;
+  color: #00a4ff;
+  font-size: 20px;
+}
+
+.logo{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 15px;
+  padding-bottom:20px; 
+  color:#00a4ff;
+  margin: 0;
+  padding-top: 30px;
+}
+.logo text{
+  text-align: center;
+  width: 100%;
+}
+.logo image{
+  display: block;
+  position: static;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}

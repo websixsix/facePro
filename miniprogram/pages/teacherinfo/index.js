@@ -177,4 +177,12 @@ Page({
       }
     })
   },
+  go2Update:function(e){
+    wx.navigateTo({
+      url: '../editinfo/index',
+    })
+  },
+  searchStu:function(){
+
+  }
 })

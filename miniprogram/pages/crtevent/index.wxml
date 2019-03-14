@@ -1,7 +1,7 @@
 <!--miniprogram/pages/signup/index.wxml-->
 
 <view class="logo">
-  <image src="../../images/admin.png"></image>
+  <image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/admin.png"></image>
   <text>发起考勤事件</text>
 </view>
 <form bindsubmit="formSubmit" bindreset="formReset">
@@ -9,12 +9,16 @@
     <label>考勤原因：</label>
     <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='请输入考勤原因'></input>
   </view>
+  <view class="name" style='display:flex;flex-direction:row'>
+    <label>时间限制：</label>
+    <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='请输入时间限制'></input>
+  </view>
   <view class="groupId" style='display:flex;flex-direction:row'>
     <label>专业：</label>
     <input value="{{groupId}}" bindinput='inputedit' data-name='group_id' placeholder='请输入专业名称'></input>
   </view>
   <view class="add">
-    <image src='../../images/add.png'></image>
+    <image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/add.png'></image>
   </view>
   <view class="btn-area">
     <button form-type="reset">重置</button>

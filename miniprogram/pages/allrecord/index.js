@@ -8,12 +8,16 @@ Page({
    * 页面的初始数据
    */
   data: {
+    dateSet: '2019-03-17',
+    start: '',
+    end: '',
     teacher_id:'',
     recordList: [],
     month: '',
     date: '',
     year: '',
-    page:0
+    page:0,
+    attend_flag:true
   },
 
   /**
@@ -37,7 +41,10 @@ Page({
           self.setData({
             month: now.getMonth(),
             date: now.getDate(),
-            year: now.getFullYear()
+            year: now.getFullYear(),
+            dateSet: now.getFullYear() + '年' + mStr + '月' + now.getDate() + '日',
+            start: (now.getFullYear() - 1) + '-' + (now.getMonth() + 1) + '-' + now.getDate(),
+            end: now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate(),
           }, () => {
             self.load()
           })
@@ -150,6 +157,17 @@ Page({
           page: index+1
         })
       }
+    })
+  },
+  bindDateChange(e) {
+    console.log('picker发送选择改变，携带值为', e)
+    let date = e.detail.value;
+    let arr = date.split('-');
+    this.setData({
+      year: arr[0],
+      month: arr[1] - 1,
+      date: arr[2],
+      dateSet: arr[0] + '年' + arr[1] + '月' + arr[2] + '日'
     })
   },
 })

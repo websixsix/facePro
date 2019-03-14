@@ -1,7 +1,7 @@
 <!--miniprogram/pages/signupface/index.wxml-->
 <!-- 操作数据库 -->
   <view class="logo">
-    <image src="../../images/library.png"></image>
+    <image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/library.png"></image>
     <text>人脸注册</text>
   </view>
 

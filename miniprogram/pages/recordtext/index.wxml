@@ -1,5 +1,90 @@
 <!--miniprogram/pages/recordtext/index.wxml-->
-<text>考勤记录</text>
-<view wx:for="{{recordList}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
-  <text>{{item.name}}在 {{item.date}} 签到</text>
+<view class="logo">
+  <image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/date.png"></image>
+  <text>考勤记录</text>
 </view>
+<view class="section">
+  <picker
+    mode="date"
+    value="{{dateSet}}"
+    start="{{start}}"
+    end="{{end}}"
+    bindchange="bindDateChange"
+  >
+    <view class="filt-box">
+      <view>日期：</view>
+      <view>{{dateSet}}</view>
+    </view>
+  </picker>
+  <view>
+    <button class="primary">搜索</button>
+  </view>
+</view>
+<view class="record">
+  <view class="item">
+    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
+    <view class="context">
+      <view><text>时间：</text>2019/3/14 11:47</view>
+      <view><text>事件：</text>电子工艺实训考勤</view>
+      <view><text>发起人：</text>曾水生</view>
+      <view><text>地点：</text>福建省福州市闽侯县福建师范大学旗山校区实验楼</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
+    <view class="context">
+      <view><text>时间：</text>2019/3/14 11:47</view>
+      <view><text>事件：</text>电子工艺实训考勤</view>
+      <view><text>发起人：</text>曾水生</view>
+      <view><text>地点：</text>福建省福州市闽侯县福建师范大学旗山校区实验楼</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
+    <view class="context">
+      <view><text>时间：</text>2019/3/14 11:47</view>
+      <view><text>事件：</text>电子工艺实训考勤</view>
+      <view><text>发起人：</text>曾水生</view>
+      <view><text>地点：</text>福建省福州市闽侯县福建师范大学旗山校区实验楼</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
+    <view class="context">
+      <view><text>时间：</text>2019/3/14 11:47</view>
+      <view><text>事件：</text>电子工艺实训考勤</view>
+      <view><text>发起人：</text>曾水生</view>
+      <view><text>地点：</text>福建省福州市闽侯县福建师范大学旗山校区实验楼</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
+    <view class="context">
+      <view><text>时间：</text>2019/3/14 11:47</view>
+      <view><text>事件：</text>电子工艺实训考勤</view>
+      <view><text>发起人：</text>曾水生</view>
+      <view><text>地点：</text>福建省福州市闽侯县福建师范大学旗山校区实验楼</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
+    <view class="context">
+      <view><text>时间：</text>2019/3/14 11:47</view>
+      <view><text>事件：</text>电子工艺实训考勤</view>
+      <view><text>发起人：</text>曾水生</view>
+      <view><text>地点：</text>福建省福州市闽侯县福建师范大学旗山校区实验楼</view>
+    </view>
+  </view>
+  <view class="item">
+    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
+    <view class="context">
+      <view><text>时间：</text>2019/3/14 11:47</view>
+      <view><text>事件：</text>电子工艺实训考勤</view>
+      <view><text>发起人：</text>曾水生</view>
+      <view><text>地点：</text>福建省福州市闽侯县福建师范大学旗山校区实验楼</view>
+    </view>
+  </view>
+</view>
+<!-- <view wx:for="{{recordList}}" wx:for-index="idx" wx:for-item="item" wx:key="{{idx}}">
+  <text>{{item.name}}在 {{item.date}} 签到</text>
+</view> -->

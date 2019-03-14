@@ -7,9 +7,8 @@ view{
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  padding: 10px;
-  border-bottom: 1px solid #00a4ff;
-  margin: 0 20px;
+  border-bottom: 1px dashed #00a4ff;
+  padding: 10px 30px;
 }
 .info-item image{
   width: 40px;
@@ -17,6 +16,20 @@ view{
 }
 .info-item .info-box{
   flex:1;
+}
+.attend-item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.attend-item image{
+  width: 40px;
+  height:40px;
+}
+.attend-data{
+  flex: 1;
 }
 .attend-item view{
   color: #666666;
@@ -46,4 +59,30 @@ button.primary{
   color: #ffffff;
   background-color: #2bb5ff;
   border: 1px solid #ffffff;
+}
+.logo{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 15px;
+  padding-bottom:20px; 
+  color:#00a4ff;
+  margin: 0;
+  padding-top: 30px;
+  border-bottom: 1px dashed #00a4ff;
+}
+.logo view{
+  width: 100%;
+}
+.logo text{
+  text-align: left;
+  width: 100%;
+}
+.logo image{
+  display: block;
+  position: static;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
 }

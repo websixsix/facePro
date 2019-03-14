@@ -1,4 +1,5 @@
-/* miniprogram/pages/recordtext/index.wxss */
+/* miniprogram/pages/cosevent/index.wxss */
+
 .logo{
   display: flex;
   flex-direction: row;
@@ -21,6 +22,23 @@
   height: 50px;
   margin-bottom: 10px;
 }
+.event-item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 10px 10px;
+  border: 1px dashed #eeeeee;
+  align-items:center;
+}
+.event-item text{
+  color: #00a4ff;
+}
+.event-item image{
+  width: 50px;
+  height: 50px;
+  margin: 0 10px;
+}
+
 .section{
   border-bottom: 1px dashed #eeeeee;
 }
@@ -50,38 +68,4 @@ button.primary{
   color: #ffffff;
   background-color: #2bb5ff;
   border: 1px solid #ffffff;
-}
-.item{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  background-color: rgba(97,135,243,0.2);
-  border-bottom: 1px dashed #eeeeee;
-  margin-bottom: 20px;
-  padding: 10px 0;
-}
-.item image{
-  width: 40px;
-  height: 40px;
-  margin-left: 5px;
-  margin-top:20px;
-}
-.item text{
-  color:#00a4ff;
-  padding-left: 5px;
-}
-.item text.red{
-  color: red;
-}
-.item text.green{
-  color: green;
-}
-
-input {
-  border-bottom: 1px #2bb5ff solid;
-  padding-left: 30px;
-  flex: 1;
-}
-label{
-  font-size: 15px;
 }

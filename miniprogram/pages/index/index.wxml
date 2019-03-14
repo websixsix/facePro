@@ -1,27 +1,27 @@
 <!--miniprogram/pages/pageone/pageone.wxml-->
 <view class="contain">
   <view class="logo">
-    <image src="../../images/camera.png"></image>
+    <image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/camera.png"></image>
     <text>人脸识别系统</text>
   </view>
   <view class="signUp">
     <!-- <text>如果没有账号，请点击↓</text> -->
     <navigator url="../signup/index">
       <button>
-        <view><image src="../../images/approval.png" style="left:60px;top:9px;"></image>人脸信息注册</view>
+        <view><image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/approval.png" style="left:60px;top:9px;"></image>人脸信息注册</view>
       </button>
     </navigator>
   </view>
   <view class="signIn">
     <!-- <text>如果已有账号，请点击↓</text> -->
-    <navigator url="../userinfo/index">
+    <navigator url="../signin/index">
       <button class="primary">
-        <view><image src="../../images/banji-white.png"></image>学生登录</view>
+        <view><image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/banji-white.png"></image>学生登录</view>
       </button>
     </navigator>
     <navigator url="../teacherinfo/index">
       <button class="primary">
-        <view><image src="../../images/course-white.png"></image>教师登录</view>
+        <view><image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/course-white.png"></image>教师登录</view>
       </button>
     </navigator>
   </view>

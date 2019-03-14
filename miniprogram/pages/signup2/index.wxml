@@ -1,6 +1,6 @@
 
 <view class="logo">
-  <image src="../../images/team.png"></image>
+  <image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/team.png"></image>
   <text>注册</text>
 </view>
 <view class="top-tip" >

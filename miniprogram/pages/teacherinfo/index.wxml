@@ -1,9 +1,10 @@
 <!--miniprogram/pages/teacherinfo/index.wxml-->
-<view class="info-item">
-  <view><image src='../../images/username.png'></image></view>
-  <view class="info-box"> 
+<view class="logo">
+  <image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/username.png"></image>
+  <view>
     <view>用户名：{{name}}</view> 
-    <view>{{group_id}}({{user_id}})</view> 
+    <view>学院：{{group_id}}</view> 
+    <view>教师工号：{{user_id}}</view>
   </view>
 </view>
 <!-- <text>您负责的学员列表</text>
@@ -18,9 +19,9 @@
   </view>
 </view> -->
   
-  <navigator url="../allrecord/index">
+  <navigator url="../checkevent/index">
     <view class="info-item">
-      <view><image src='../../images/look.png'></image></view>
+      <view><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/look.png'></image></view>
       <view class="info-box">
         <view>未考勤<text style='color:red'>11</text>人，已考勤350人</view>
         <view style="color:#000000">点此查看考勤记录</view>
@@ -29,18 +30,24 @@
   </navigator>
   <navigator url="../crtevent/index">
     <view class="info-item">
-      <view><image src='../../images/admin.png'></image></view>
+      <view><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/admin.png'></image></view>
       <view class="info-box">
         <view>发起考勤事件</view>
       </view>
     </view>
   </navigator>
   <view class="info-item">
-    <view><image src='../../images/search.png'></image></view>
+    <view><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/message.png'></image></view>
+    <view class="info-box">
+      <view>一键查寝</view>
+      <view style="color:#000000">时间限制为半小时</view>
+    </view>
+  </view>
+  <view class="info-item">
+    <view bindtap='searchStu'><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/search.png'></image></view>
     <view class="info-box">
       <view><input data-name='name' placeholder='请输入姓名'></input></view>
-      <view><button style="font-size:15px">搜索学生</button></view>
-      <view class="src-result">
+      <!-- <view class="src-result" bindtap='go2Update' bindlongtap='deleteStu'>
         <view>姓名：陈佳峰</view>
         <view>专业：信息工程</view>
         <view>学号：13000000000</view>
@@ -49,22 +56,7 @@
         <view>姓名：陈佳峰</view>
         <view>专业：信息工程</view>
         <view>学号：13000000000</view>
-      </view>
-      <view class="src-result">
-        <view>姓名：陈佳峰</view>
-        <view>专业：信息工程</view>
-        <view>学号：13000000000</view>
-      </view>
-      <view class="src-result">
-        <view>姓名：陈佳峰</view>
-        <view>专业：信息工程</view>
-        <view>学号：13000000000</view>
-      </view>
-      <view class="src-result">
-        <view>姓名：陈佳峰</view>
-        <view>专业：信息工程</view>
-        <view>学号：13000000000</view>
-      </view>
+      </view> -->
     </view>
   </view>
 <!-- <navigator url="../allrecord/index">

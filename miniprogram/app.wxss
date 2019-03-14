@@ -11,6 +11,7 @@ page{
   background-image: url('https://6661-face-rec-a9086b-1258261574.tcb.qcloud.la/assets/bg.jpg?sign=ec50ec8985ec52dc234e62e7e66c86b3&t=1552300173');
   background-size: 100% 100%;
   background-repeat: no-repeat;
+  font-size: 15px;
 }
 
 .contain{

@@ -1,3 +1,12 @@
-<!--miniprogram/pages/editinfo/index.wxml-->
-<text>miniprogram/pages/editinfo/index.wxml</text>
-信息修改页面
+<!--miniprogram/pages/signupface/index.wxml-->
+<!-- 操作数据库 -->
+  <view class="logo">
+    <image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/library.png"></image>
+    <text>人脸更新</text>
+  </view>
+
+  <camera id="face-camera" device-position="front" flash="off" binderror="error" style="width: 80%; height: 300px;margin:10px auto;"></camera>
+
+  <view class="uploader">
+      <text>请将脸部正对摄像头</text>
+  </view>
