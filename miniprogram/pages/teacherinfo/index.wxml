@@ -23,8 +23,16 @@
     <view class="info-item">
       <view><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/look.png'></image></view>
       <view class="info-box">
-        <view>未考勤<text style='color:red'>11</text>人，已考勤350人</view>
+        <view>今日未考勤<text style='color:red'>11</text>人，已考勤350人</view>
         <view style="color:#000000">点此查看考勤记录</view>
+      </view>
+    </view>
+  </navigator>
+  <navigator url="../checkcount/index">
+    <view class="info-item">
+      <view><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/icon_file.png'></image></view>
+      <view class="info-box">
+        <view>考勤总览</view>
       </view>
     </view>
   </navigator>
@@ -43,11 +51,11 @@
       <view style="color:#000000">时间限制为半小时</view>
     </view>
   </view>
-  <view class="info-item">
+  <view class="info-item last-item">
     <view bindtap='searchStu'><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/search.png'></image></view>
     <view class="info-box">
       <view><input data-name='name' placeholder='请输入姓名'></input></view>
-      <!-- <view class="src-result" bindtap='go2Update' bindlongtap='deleteStu'>
+      <view class="src-result" bindtap='go2Update' bindlongtap='deleteStu'>
         <view>姓名：陈佳峰</view>
         <view>专业：信息工程</view>
         <view>学号：13000000000</view>
@@ -56,7 +64,7 @@
         <view>姓名：陈佳峰</view>
         <view>专业：信息工程</view>
         <view>学号：13000000000</view>
-      </view> -->
+      </view>
     </view>
   </view>
 <!-- <navigator url="../allrecord/index">

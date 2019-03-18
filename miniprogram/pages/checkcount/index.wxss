@@ -1,0 +1,72 @@
+/* miniprogram/pages/recordtext/index.wxss */
+.logo{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  font-size: 15px;
+  padding-bottom:20px; 
+  color:#00a4ff;
+  margin: 0;
+  padding-top: 30px;
+}
+.logo text{
+  text-align: center;
+  width: 100%;
+}
+.logo image{
+  display: block;
+  position: static;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 10px;
+}
+.section{
+  border-bottom: 1px dashed #eeeeee;
+}
+.filt-box{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  text-align: center;
+}
+.filt-box view{
+  color: #00a4ff
+}
+button{
+  width: 60%;
+  height: 2rem;
+  line-height: 2rem;
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  color: #00a4ff;
+  border-radius: 30px;
+  border: 1px solid #00a4ff;
+  background-color: #ffffff;
+}
+button.primary{
+  color: #ffffff;
+  background-color: #2bb5ff;
+  border: 1px solid #ffffff;
+}
+.item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  background-color: rgba(97,135,243,0.2);
+  border-bottom: 1px dashed #eeeeee;
+  margin-bottom: 20px;
+  padding: 10px 0;
+}
+.item image{
+  width: 40px;
+  height: 40px;
+  margin-left: 5px;
+  margin-top:20px;
+}
+.item text{
+  color:#00a4ff;
+  padding-left: 5px;
+}

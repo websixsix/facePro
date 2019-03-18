@@ -91,3 +91,6 @@ button{
 .attend-data{
   flex: 1;
 }
+.last-item{
+  margin-bottom: 50px;
+}

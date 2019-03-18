@@ -14,7 +14,7 @@
   </view>
   <view class="signIn">
     <!-- <text>如果已有账号，请点击↓</text> -->
-    <navigator url="../signin/index">
+    <navigator url="../userinfo/index">
       <button class="primary">
         <view><image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/banji-white.png"></image>学生登录</view>
       </button>

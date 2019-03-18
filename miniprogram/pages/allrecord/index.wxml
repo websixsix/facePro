@@ -22,6 +22,7 @@
     <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
     <view class="context">
       <view><text>学生姓名：</text>陈佳峰</view>
+      <view><text>专业：</text>信息工程</view>
       <view>
         <text>考勤状态：</text>
         <text class="red" wx:if="{{attend_flag}}">未考勤</text>
@@ -34,7 +35,8 @@
   <view class="item">
     <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
     <view class="context">
-      <view><text>学生姓名：</text>陈佳峰</view>
+      <view><text>学生姓名：</text>陈佳</view>
+      <view><text>专业：</text>信息工程</view>
       <view>
         <text>考勤状态：</text>
         <text class="red" wx:if="{{attend_flag}}">未考勤</text>
@@ -47,7 +49,8 @@
   <view class="item">
     <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
     <view class="context">
-      <view><text>学生姓名：</text>陈佳峰</view>
+      <view><text>学生姓名：</text>陈峰</view>
+      <view><text>专业：</text>信息工程</view>
       <view>
         <text>考勤状态：</text>
         <text class="green">已考勤</text>

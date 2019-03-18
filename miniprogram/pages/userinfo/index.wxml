@@ -68,7 +68,7 @@
   </navigator>
   
   <navigator url="../cosevent/index">
-    <view class="info-item">
+    <view class="info-item last-item">
       <view><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/full_screen.png'></image></view>
       <view class="info-box">
         <view>开始考勤</view>
