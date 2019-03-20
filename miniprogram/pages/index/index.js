@@ -69,6 +69,7 @@ Page({
   },
   //清空数据库
   resetDb: function () {
+    console.info(app.globalData.openid)
     // 删除的逻辑
     wx.cloud.callFunction({
       name: 'cleardb',

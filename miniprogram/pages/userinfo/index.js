@@ -32,7 +32,8 @@ Page({
           group_id: res.data[0].group_id,
           limit: res.data[0].limit,
           teacher_id: res.data[0].teacher_id,
-          user_id: res.data[0].user_id
+          user_id: res.data[0].user_id,
+          specialty: res.data[0].specialty
         })
         self.loadAll()
       },

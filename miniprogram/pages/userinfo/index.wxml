@@ -3,7 +3,7 @@
   <image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/username.png"></image>
   <view>
     <view>用户名：{{name}}</view> 
-    <view>专业：{{group_id}}</view> 
+    <view>专业：{{specialty}}</view> 
     <view>学号：{{user_id}}</view>
   </view>
 </view>

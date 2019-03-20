@@ -13,6 +13,7 @@ Page({
     groupList: [],
     pageIndex: 0,
     user_id: '',
+    college: '',
     groupObj : {}
   },
 
@@ -29,8 +30,10 @@ Page({
         self.setData({
           name: res.data[0].name,
           group_id: res.data[0].group_id,
-          user_id: res.data[0].user_id
+          user_id: res.data[0].user_id,
+          college: res.data[0].college
         })
+        app.globalData.userInfo = res.data[0]
         self.loadAll()
       },
       fail: (err) => {

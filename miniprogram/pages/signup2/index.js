@@ -10,7 +10,8 @@ Page({
     form: {
       name: '',
       user_id: '',
-      group_id: '',
+      college:'',
+      group_id: 'teachers',
       character: 'teachers'
     },
     array: ['test1', 'test2', 'test3', 'test4'],
@@ -26,7 +27,6 @@ Page({
     this.setData({
       openId: app.globalData.openid
     })
-    this.data.form.group_id = this.data.array[this.data.index]
     // this.diffWxOpen('teachers')
   },
 
@@ -90,36 +90,7 @@ Page({
     }
     this.data.form[dataset.name] = value;
   },
-  //老师/学生身份转换
-  radioChange(e) {
-    let value = e.detail.value;
-    this.data.form['character'] = value;
-    let flag = this.data.text
-    if (flag) {
-      this.setData({
-        form: {
-          name: '',
-          user_id: '',
-          group_id: 'teachers',
-          character: 'teachers'
-        },
-        text: !flag,
-        secret: ''
-      })
-    } else {
-      this.setData({
-        form: {
-          name: '',
-          user_id: '',
-          group_id: this.data.array[this.data.index],
-          teacher_id: '',
-          character: 'students'
-        },
-        text: !flag,
-        secret: ''
-      })
-    }
-  },
+  // 匹配专业对应的字符串
   //picker 选择group
   bindPickerChange: function (e) {
     console.log('picker发送选择改变，携带值为', e.detail.value)

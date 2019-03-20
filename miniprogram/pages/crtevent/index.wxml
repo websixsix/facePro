@@ -7,18 +7,15 @@
 <form bindsubmit="formSubmit" bindreset="formReset">
   <view class="name" style='display:flex;flex-direction:row'>
     <label>考勤原因：</label>
-    <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='请输入考勤原因'></input>
+    <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='X年X月X日XX课'></input>
   </view>
   <view class="name" style='display:flex;flex-direction:row'>
     <label>时间限制：</label>
-    <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='请输入时间限制'></input>
+    <input value="{{form.limit}}" bindinput='inputedit' data-name='limit' type="number" placeholder='请输入时间限制(Min)'></input>
   </view>
   <view class="groupId" style='display:flex;flex-direction:row'>
     <label>专业：</label>
-    <input value="{{groupId}}" bindinput='inputedit' data-name='group_id' placeholder='请输入专业名称'></input>
-  </view>
-  <view class="add">
-    <image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/add.png'></image>
+    <input value="{{form.range}}" bindinput='inputedit' data-name='range' placeholder='如：信息工程，通信工程'></input>
   </view>
   <view class="btn-area">
     <button form-type="reset">重置</button>

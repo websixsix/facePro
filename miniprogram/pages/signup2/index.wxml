@@ -14,13 +14,17 @@
     <label>姓名：</label>
     <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='请输入姓名'></input>
   </view>
+  <view class="groupId" style='display:flex;flex-direction:row'>
+    <label>学院：</label>
+    <input value="{{college}}" bindinput='inputedit' data-name='college' placeholder='请输入学院名称'></input>
+  </view>
   <view class="userId" style='display:flex;flex-direction:row' >
     <label>工号：</label>
-    <input value="{{form.user_id}}" bindinput='inputedit' data-name='user_id' placeholder='请输入工号'></input>
+    <input value="{{form.user_id}}" bindinput='inputedit' data-name='user_id' type="number" placeholder='请输入工号'></input>
   </view>
   <view class="secret" style='display:flex;flex-direction:row'>
     <label>注册码：</label>
-    <input value="{{secret}}" bindinput='inputedit' data-name='secret' password='true' placeholder='请输入注册码'></input>
+    <input value="{{secret}}" bindinput='inputedit' data-name='secret' password='true' type="number" placeholder='请输入注册码'></input>
   </view>
   <view class="btn-area">
     <button form-type="reset">重置</button>

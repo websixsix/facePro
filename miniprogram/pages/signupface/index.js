@@ -127,17 +127,19 @@ Page({
     if (dbName === 'students') {
       dbData = {
         group_id: this.data.form.group_id,
+        college: this.data.form.college,
+        specialty: this.data.form.specialty,
         name: this.data.form.name,
         user_id: this.data.form.user_id,
         teacher_id: this.data.form.teacher_id,
-        character: this.data.form.character,
-        limit: false
+        character: this.data.form.character
       }
     }else{
       dbData = {
         // _id: app.globalData.openid, // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
         group_id: this.data.form.group_id,
         name: this.data.form.name,
+        college: this.data.form.college,
         user_id: this.data.form.user_id,
         character: this.data.form.character
       }
