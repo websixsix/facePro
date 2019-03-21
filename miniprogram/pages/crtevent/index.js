@@ -12,7 +12,7 @@ Page({
       limit:'',
       range:''
     },
-    userinfo:'',
+    userInfo:'',
   },
 
   /**
@@ -20,7 +20,7 @@ Page({
    */
   onLoad: function (options) {
     this.setData({
-      userinfo: app.globalData.userInfo
+      userInfo: app.globalData.userInfo
     })
   },
 
@@ -33,7 +33,7 @@ Page({
   // 事件创建完成
   formSubmit: function () {
     let self = this;
-    console.info(this.data.form)
+    let range = this.data.form.range.split('，');
     if (this.data.form.name && this.data.form.limit && this.data.form.range) {
       wx.cloud.callFunction({
         name: 'createEvent',
@@ -41,11 +41,15 @@ Page({
           name: self.data.form.name
         },
         success: res => {
-          console.info(res)
+          console.info(res, 'event')
           wx.showToast({
             title: '创建事件成功',
             icon: 'success',
-            success(res) { }
+            success(res) {
+              for (let i = 0; i < range.length; i++) {
+                self.createStudents(range[i], 'aa');
+              }
+            }
           })
         },
         fail: err => {
@@ -70,6 +74,23 @@ Page({
       return;
     }
     this.data.form[dataset.name] = value;
+  },
+  //在事件集合下创建学生
+  createStudents: function (range, event) {
+    let self = this;
+    console.info(range)
+    wx.cloud.callFunction({
+      name: 'createStudents',
+      data: {
+        college: self.data.userInfo.college,
+        specialty: range
+      },
+      success: res => {
+        console.info(res.result[0], "成功")
+      },
+      fail: err => {
+        console.info(err)
+      }
+    })
   }
-  
 })
