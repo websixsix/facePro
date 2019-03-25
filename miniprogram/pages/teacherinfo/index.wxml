@@ -7,17 +7,6 @@
     <view>教师工号：{{user_id}}</view>
   </view>
 </view>
-<!-- <text>您负责的学员列表</text>
-<view>
-  <view wx:for="{{groupObj}}" wx:for-index="idx" wx:for-item="group" wx:key="idx">
-    <text>分组：{{idx}}</text>
-    <view class="student-box">
-      <view class="student-item" wx:for="{{group}}" wx:for-index="itemidx" wx:for-item="item" wx:key="*this._id" bindtap='setLimit' bindlongpress='deleteStu' data-info="{{item}}">
-        <text>{{item.name}}</text>
-      </view>
-    </view>
-  </view>
-</view> -->
   
   <navigator url="../checkevent/index">
     <view class="info-item">

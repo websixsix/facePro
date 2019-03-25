@@ -7,7 +7,7 @@
 <form bindsubmit="formSubmit" bindreset="formReset">
   <view class="name" style='display:flex;flex-direction:row'>
     <label>考勤原因：</label>
-    <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='X年X月X日XX课'></input>
+    <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='X年X月X日XX课' maxlength='14'></input>
   </view>
   <view class="name" style='display:flex;flex-direction:row'>
     <label>时间限制：</label>

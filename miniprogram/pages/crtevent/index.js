@@ -35,20 +35,33 @@ Page({
     let self = this;
     let range = this.data.form.range.split('，');
     if (this.data.form.name && this.data.form.limit && this.data.form.range) {
+      // 创建该事件的集合
       wx.cloud.callFunction({
         name: 'createEvent',
         data: {
           name: self.data.form.name
         },
         success: res => {
-          console.info(res, 'event')
+          console.info(res)
+          if(!res.result){
+            wx.showToast({
+              title: '该事件已存在',
+              icon: 'none'
+            })
+            return;
+          }
+          for (let i = 0; i < range.length; i++) {
+            self.createStudents(range[i], self.data.form.name);
+          }
           wx.showToast({
             title: '创建事件成功',
             icon: 'success',
             success(res) {
-              for (let i = 0; i < range.length; i++) {
-                self.createStudents(range[i], 'aa');
-              }
+              setTimeout(() => {
+                wx.navigateBack({
+                  delta: 0
+                })
+              },2000)
             }
           })
         },
@@ -78,18 +91,46 @@ Page({
   //在事件集合下创建学生
   createStudents: function (range, event) {
     let self = this;
-    console.info(range)
     wx.cloud.callFunction({
       name: 'createStudents',
       data: {
         college: self.data.userInfo.college,
-        specialty: range
+        specialty: range,
+        eventName: event
       },
       success: res => {
-        console.info(res.result[0], "成功")
+        if(!res.result){
+          return;
+        }
+        res.result.forEach(e => {
+          db.collection(event).add({
+            data: {
+              isChecked: false,
+              name: e.name,
+              specialty: e.specialty,
+              user_id: e.user_id,
+              event: event.eventName
+            }
+          })
+        })
+        self.recallInEvent();
       },
       fail: err => {
         console.info(err)
+      }
+    })
+  },
+  // 在事件集合里添加该事件
+  recallInEvent:function(){
+    let self = this;
+    db.collection('events').add({
+      data: {
+        name: self.data.form.name,
+        teacher: self.data.userInfo.name,
+        teacher_id: self.data.userInfo.user_id,
+        limit: self.data.form.limit,
+        range: self.data.form.range,
+        date: new Date()
       }
     })
   }

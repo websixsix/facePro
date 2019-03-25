@@ -26,7 +26,7 @@ Page({
       month: now.getMonth(),
       date: now.getDate(),
       year: now.getFullYear(),
-      dateSet: now.getFullYear() + '年' + mStr + '月' + now.getDate() + '日',
+      dateSet: now.getFullYear() + '-' + mStr + '-' + now.getDate(),
       start: (now.getFullYear() - 1) + '-' + (now.getMonth() + 1) + '-' + now.getDate(),
       end: now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate(),
     }, () => {
@@ -60,7 +60,11 @@ Page({
       year: arr[0],
       month: arr[1] - 1,
       date: arr[2],
-      dateSet: arr[0] + '年' + arr[1] + '月' + arr[2] + '日'
+      dateSet: arr[0] + '-' + arr[1] + '-' + arr[2]
     })
   },
+  search:function(){
+    let srcDate = new Date(this.data.year, this.data.month, this.data.date);
+    
+  }
 })
