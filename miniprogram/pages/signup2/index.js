@@ -61,16 +61,40 @@ Page({
   },
   // 跳转到人脸注册页面
   formSubmit: function () {
+    let self = this;
     if (this.data.form.name &&
       this.data.form.user_id &&
       this.data.form.group_id &&
+      this.data.form.college &&
       this.data.openId &&
       this.data.secret === '1204' &&
       this.data.form.character === "teachers") {
-      wx.setStorageSync('sign', this.data.form)
-      wx.navigateTo({
-        url: '../signupface/index',
-      })
+        db.collection('college').where({
+          name: self.data.form.college
+        }).get({
+          success(res) {
+            console.info(res)
+            if (res.data.length === 0) {
+              self.createColl().then((res) => {
+                console.info('创建成功', res);
+                self.data.form.group_id = res._id;
+                wx.setStorageSync('sign', self.data.form)
+                wx.navigateTo({
+                  url: '../signupface/index',
+                })
+              })
+            } else {
+              self.data.form.group_id = res.data[0]._id;
+              wx.setStorageSync('sign', self.data.form)
+              wx.navigateTo({
+                url: '../signupface/index',
+              })
+            }
+          },
+          fail(err) {
+            console.info(err)
+          }
+        })
     } else {
       wx.showToast({
         title: '注册信息有误',
@@ -78,6 +102,21 @@ Page({
         duration: 2000
       })
     }
+  },
+  // 创建新的学院
+  createColl: function () {
+    let self = this;
+    return new Promise((resolve, reject) => {
+      wx.cloud.callFunction({
+        name: "addCollege",
+        data: {
+          college: this.data.form.college
+        },
+        success(res) {
+          resolve(res);
+        }
+      })
+    })
   },
   inputedit: function (e) {
     let string = e.detail.value

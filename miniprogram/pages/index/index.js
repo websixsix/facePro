@@ -98,8 +98,7 @@ Page({
           url: 'https://apis.map.qq.com/ws/coord/v1/translate?locations='+res.latitude+','+res.longitude+'&type=1&key=QBSBZ-QREK3-JMW3N-3PIV4-Y5QNE-DCB4O',
           success(res1){
             console.info(res1);
-            let location = res1.data.locations[0]
-            return;
+            let location = res1.data.locations[0];
             var getAddressUrl = "https://apis.map.qq.com/ws/geocoder/v1/?location=" + location.lat + "," + location.lng + "&key=QBSBZ-QREK3-JMW3N-3PIV4-Y5QNE-DCB4O&get_poi=1";
             wx.request({
               url: getAddressUrl,

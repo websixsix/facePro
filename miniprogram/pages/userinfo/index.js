@@ -10,17 +10,22 @@ Page({
   data: {
     name:'',
     group_id:'',
-    limit:false,
-    groupList:[],
     pageIndex:0,
     user_id:'',
-    teacher_id:''
+    teacher_id:'',
+    specialty:'',
+    college: '',
+    eventNum: 0,
+    recordList: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+    })
     let self = this
     db.collection('students').where({
       _openid: app.globalData.openid,
@@ -30,11 +35,12 @@ Page({
         self.setData({
           name: res.data[0].name,
           group_id: res.data[0].group_id,
-          limit: res.data[0].limit,
           teacher_id: res.data[0].teacher_id,
           user_id: res.data[0].user_id,
-          specialty: res.data[0].specialty
+          specialty: res.data[0].specialty,
+          college: res.data[0].college
         })
+        app.globalData.userInfo = res.data[0]
         self.loadAll()
       },
       fail: (err) => {
@@ -50,55 +56,47 @@ Page({
   onReady: function () {
 
   },
-  //查找数据库 -> 找出自己权限组
-  show2group: function (page) {
-    let self = this
-    db.collection('students').where({
-      group_id: self.data.group_id,
-      user_id: _.neq(self.data.user_id),
-      teacher_id: self.data.teacher_id
-    }).skip(page * 20).limit(20)
-      .get({
-        success(res) {
-          // res.data 是包含以上定义的两条记录的数组
-          let arr = self.data.groupList
-          for(let i = 0; i< res.data.length; i++){
-            arr.push(res.data[i])
-          }
-          self.setData({
-            groupList: arr
-          })
-          console.log(self.data.groupList,'11')
-        }
-      })
-  },
   //分段加载全部数据
   loadAll:function () {
     let self = this
-    db.collection('students').where({
-      group_id: self.data.group_id,
-      user_id: _.neq(self.data.user_id),
-      teacher_id: self.data.teacher_id
-    }).count({
-      success(res) {
-        let total = res.total
-        for (let j = 0; j < total / 20; j++) {
-          self.show2group(j)
-        }
-      }
-    })
-  },
-  go2verify: function (e) {
-    let self = this
-    console.info(e.currentTarget.dataset)
-    wx.navigateTo({
-      url: '../verifypage/index',
-      success() {
-        wx.setStorageSync('verify', e.currentTarget.dataset.info)
+    wx.cloud.callFunction({
+      name:"getTodayEvent",
+      data:{
+        specialty: self.data.specialty,
+        college: self.data.college
+      },
+      success(res){
+        self.setData({
+          eventNum: res.result.length
+        })
+        app.globalData.todayEvent = res.result
       },
       fail(err){
         console.info(err)
       }
     })
-  }
+
+    let today = new Date();
+    let start = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    let end = new Date(start.getTime() + 24 * 60 * 60* 1000);
+    console.info(start)
+    db.collection('verifyrecord').where({
+      user_id:self.data.user_id,
+      date: _.gte(start).and(_.lt(end))
+    }).limit(5).get().then(res => {
+      let arr = [];
+      console.info(res)
+      if (res.data) {
+        res.data.forEach(e => {
+          e.date = e.date.toLocaleString();
+          arr.push(e)
+        })
+      }
+      self.setData({
+        recordList: arr
+      },()=>{
+        wx.hideLoading()
+      })
+    })
+  },
 })

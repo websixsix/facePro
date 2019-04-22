@@ -15,7 +15,8 @@ Page({
     recordList: [],
     month: '',
     date: '',
-    year: ''
+    year: '',
+    unCheckCount:0
   },
 
   /**
@@ -37,8 +38,8 @@ Page({
       month: now.getMonth(),
       date: now.getDate(),
       year: now.getFullYear(),
-      dateSet1: now.getFullYear() + '-' + mon + '-' + now.getDate(),
-      dateSet2: now.getFullYear() + '-' + mStr + '-' + now.getDate(),
+      dateSet1: now.getFullYear() + '-' + mon + '-' + (now.getDate()<10? ("0"+now.getDate()):now.getDate()),
+      dateSet2: now.getFullYear() + '-' + mStr + '-' + (now.getDate() < 10 ? ("0" + now.getDate()) : now.getDate()),
       start: (now.getFullYear() - 1) + '-' + (now.getMonth() + 1) + '-' + now.getDate(),
       end: now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate(),
     }, () => {
@@ -50,50 +51,61 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    console.info(this.data.dateSet)
-  },
-  //查找数据库 -> 找出自己权限组
-  show2group: function (page) {
-    let self = this
-    let nowDate = new Date(this.data.year, this.data.month, this.data.date);
-    db.collection('verifyrecord').where({
-      _openid: app.globalData.openid,
-      date: _.gt(nowDate)
-    }).skip(page * 20).limit(20)
-      .get({
-        success(res) {
-          // res.data 是包含以上定义的两条记录的数组
-          let arr = self.data.recordList
-          for (let i = 0; i < res.data.length; i++) {
-            res.data[i].date = res.data[i].date.toLocaleString()
-            arr.push(res.data[i])
-          }
-          self.setData({
-            recordList: arr
-          })
-          console.log(typeof self.data.recordList[0].date)
-        }
-      })
   },
   //分段加载全部数据
   loadAll: function () {
-    let self = this
+
+    wx.showLoading({
+      title: '加载中',
+    })
+
+    let self = this;
     let nowDate = new Date(this.data.year, this.data.month, this.data.date);
-    db.collection('verifyrecord').where({
-      _openid: app.globalData.openid,
-      date: _.gt(nowDate)
-    }).count({
+    wx.cloud.callFunction({
+      name: "getAllEvent",
+      data: {
+        teacher_id: app.globalData.userInfo.user_id,
+        start: self.data.dateSet1,
+        end: self.data.dateSet2
+      },
       success(res) {
-        let total = res.total
-        for (let j = 0; j < total / 20; j++) {
-          self.show2group(j)
-        }
+        let eventArr = res.result;
+        wx.cloud.callFunction({
+          name: "eventCount",
+          data: {
+            allEvent: eventArr
+          },
+          success(r){
+            let arr = [];
+            let count = 0;
+            for(let n in r.result){
+              let checked = r.result[n].count - r.result[n].check
+              count += r.result[n].check
+              arr.push({
+                name: n,
+                check: r.result[n].check,
+                checked: checked,
+                specialty: r.result[n].specialty
+              })
+            }
+            self.setData({
+              recordList: arr,
+              unCheckCount: count
+            })
+            wx.hideLoading();
+          },
+          fail(e){
+            console.info(e)
+          }
+        })
+      },
+      fail(err) {
+        console.info(err)
       }
     })
   },
 
   bindDate1Change(e) {
-    console.log('picker发送选择改变，携带值为', e)
     let date = e.detail.value;
     let arr = date.split('-');
     this.setData({
@@ -105,7 +117,6 @@ Page({
   },
 
   bindDate2Change(e) {
-    console.log('picker发送选择改变，携带值为', e)
     let date = e.detail.value;
     let arr = date.split('-');
     this.setData({

@@ -10,19 +10,21 @@ Page({
     group_id: '',
     user_id: '',
     name:'',
-    teacher_id:''
+    teacher_id:'',
+    address: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    let obj = wx.getStorageSync('verify')
+    let self = this;
     this.setData({
-      name: obj.name,
-      group_id: obj.group_id,
-      user_id: obj.user_id,
-      teacher_id: obj.teacher_id
+      name: app.globalData.userInfo.name,
+      group_id: app.globalData.userInfo.group_id,
+      user_id: app.globalData.userInfo.user_id,
+      teacher_id: app.globalData.userInfo.teacher_id
+    },()=>{
     })
   },
 
@@ -110,7 +112,7 @@ Page({
         if (res.data.error_code === 0) {
           let score = res.data.result.user_list[0].score
           if (score >= 80) {
-            self.up2Record()
+            self.getLocation()
           } else {
             wx.showModal({
               title: '考勤失败',
@@ -159,14 +161,20 @@ Page({
   },
   //把考勤记录传入数据库verifyrecord
   up2Record: function () {
-    db.collection('verifyrecord').add({
-      // data 字段表示需新增的 JSON 数据
+    let self = this;
+    let now = new Date().getTime();
+    wx.cloud.callFunction({
+      name:"addUserDB",
       data: {
-        group_id: this.data.groupId,
-        name: this.data.name,
-        user_id: this.data.user_id,
-        teacher_id: this.data.teacher_id,
-        date: new Date(),
+        dbName: 'verifyrecord',
+        dbData: {
+          name: self.data.name,
+          user_id: self.data.user_id,
+          date: now,
+          location: self.data.address,
+          eventName: app.globalData.event.name,
+          eventMaster: app.globalData.event.teacher
+        }
       },
       success(res) {
         // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
@@ -177,14 +185,59 @@ Page({
           icon: 'success',
           success() {
             setTimeout(() => {
-              wx.navigateBack({
-                delta: 1,
+              wx.reLaunch({
+                url: '../userinfo/index',
               })
             }, 1500)
           }
         })
       },
-      fail: console.error
+      fail(err){
+        console.error(err)
+      }
+    })
+
+    wx.cloud.callFunction({
+      name: "upStuInEvent",
+      data: {
+        eventName: app.globalData.event.name,
+        student: self.data.name,
+        date: now,
+        location: self.data.address
+      },
+      success(res) {
+        console.info(res, self.data.address)
+      },
+      fail(err) {
+        console.error(err)
+      }
+    })
+  },
+  // map test:ok
+  getLocation: function () {
+    let self = this;
+    wx.getLocation({
+      success: function (res) {
+        type: 'wgs84',
+        wx.request({
+          url: 'https://apis.map.qq.com/ws/coord/v1/translate?locations=' + res.latitude + ',' + res.longitude + '&type=1&key=QBSBZ-QREK3-JMW3N-3PIV4-Y5QNE-DCB4O',
+          success(res1) {
+            let location = res1.data.locations[0];
+            var getAddressUrl = "https://apis.map.qq.com/ws/geocoder/v1/?location=" + location.lat + "," + location.lng + "&key=QBSBZ-QREK3-JMW3N-3PIV4-Y5QNE-DCB4O&get_poi=1";
+            wx.request({
+              url: getAddressUrl,
+              success: function (res2) {
+                console.info(res2)
+                self.setData({
+                  address: res2.data.result.address
+                },()=>{
+                  self.up2Record()
+                })
+              }
+            })
+          }
+        })
+      },
     })
   }
 })

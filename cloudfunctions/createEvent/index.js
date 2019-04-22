@@ -15,6 +15,6 @@ exports.main = async (event, context) => {
     return false
   }
   else if(eventCount.total === 0){
-    return await db.createCollection(event.name)    
+    return await db.createCollection(event.name)
   }
 }

@@ -126,6 +126,7 @@ Page({
     let dbData
     if (dbName === 'students') {
       dbData = {
+        _openid: app.globalData.openid,
         group_id: this.data.form.group_id,
         college: this.data.form.college,
         specialty: this.data.form.specialty,
@@ -136,7 +137,7 @@ Page({
       }
     }else{
       dbData = {
-        // _id: app.globalData.openid, // 可选自定义 _id，在此处场景下用数据库自动分配的就可以了
+        _openid: app.globalData.openid,
         group_id: this.data.form.group_id,
         name: this.data.form.name,
         college: this.data.form.college,
@@ -144,9 +145,12 @@ Page({
         character: this.data.form.character
       }
     }
-    db.collection(dbName).add({
-      // data 字段表示需新增的 JSON 数据
-      data: dbData,
+    wx.cloud.callFunction({
+      name:"addUserDB",
+      data: {
+        dbName: dbName,
+        dbData: dbData
+      },
       success(res) {
         // res 是一个对象，其中有 _id 字段标记刚创建的记录的 id
         console.log(res)
@@ -163,7 +167,15 @@ Page({
           }
         })
       },
-      fail: console.error
+      fail(err){
+        console.info(err)
+
+        //跳转至最初页面
+        wx.showToast({
+          title: '注册信息有误',
+          icon: 'none'
+        })
+      }
     })
   }
 })

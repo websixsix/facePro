@@ -8,13 +8,15 @@ const _ = db.command;
 const MAX_LIMIT = 100
 // 云函数入口函数
 exports.main = async (event, context) => {
+  let startDate = new Date(event.date);
+  let endDate = new Date(startDate.getTime() + 24 * 60 * 60 * 1000)
   const wxContext = cloud.getWXContext()
   // 先取出集合记录总数
-  const countResult = await db.collection('students').where({
-    college: event.college,
-    specialty: event.specialty
+  const countResult = await db.collection('verifyrecord').where({
+    user_id: event.user_id,
+    date: _.gte(startDate).and(_.lt(endDate))
   }).count()
-  if(countResult.total === 0){
+  if (countResult.total === 0) {
     return false;
   }
   const total = countResult.total
@@ -24,12 +26,12 @@ exports.main = async (event, context) => {
   const tasks = []
 
   for (let i = 0; i < batchTimes; i++) {
-    const students = await db.collection('students').where({
-      college: event.college,
-      specialty: event.specialty
+    const record = await db.collection('verifyrecord').where({
+      user_id: event.user_id,
+      date: _.gte(startDate).and(_.lt(endDate))
     }).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
 
-    students.data.forEach(e => {
+    record.data.forEach(e => {
       tasks.push(e)
     })
   }

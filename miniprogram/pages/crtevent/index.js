@@ -42,7 +42,6 @@ Page({
           name: self.data.form.name
         },
         success: res => {
-          console.info(res)
           if(!res.result){
             wx.showToast({
               title: '该事件已存在',
@@ -58,8 +57,8 @@ Page({
             icon: 'success',
             success(res) {
               setTimeout(() => {
-                wx.navigateBack({
-                  delta: 0
+                wx.reLaunch({
+                  url: "../teacherinfo/index"
                 })
               },2000)
             }
@@ -102,36 +101,29 @@ Page({
         if(!res.result){
           return;
         }
-        res.result.forEach(e => {
-          db.collection(event).add({
-            data: {
-              isChecked: false,
-              name: e.name,
-              specialty: e.specialty,
-              user_id: e.user_id,
-              event: event.eventName
-            }
-          })
+        wx.cloud.callFunction({
+          name:"afterCreate",
+          data:{
+            array: res.result,
+            name: self.data.form.name,
+            teacher: self.data.userInfo.name,
+            teacher_id: self.data.userInfo.user_id,
+            limit: self.data.form.limit,
+            range: self.data.form.range,
+            date: new Date().getTime(),
+            eventName: event
+          },
+          success(res){
+            console.info(res)
+          },
+          fail(err){
+            console.error(err)
+          }
         })
-        self.recallInEvent();
       },
       fail: err => {
         console.info(err)
       }
     })
   },
-  // 在事件集合里添加该事件
-  recallInEvent:function(){
-    let self = this;
-    db.collection('events').add({
-      data: {
-        name: self.data.form.name,
-        teacher: self.data.userInfo.name,
-        teacher_id: self.data.userInfo.user_id,
-        limit: self.data.form.limit,
-        range: self.data.form.range,
-        date: new Date()
-      }
-    })
-  }
 })

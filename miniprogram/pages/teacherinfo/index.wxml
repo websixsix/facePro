@@ -12,7 +12,7 @@
     <view class="info-item">
       <view><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/look.png'></image></view>
       <view class="info-box">
-        <view>今日未考勤<text style='color:red'>11</text>人，已考勤350人</view>
+        <view>今日未考勤<text style='color:red'>{{check}}</text>人，已考勤{{allCheck - check}}人</view>
         <view style="color:#000000">点此查看考勤记录</view>
       </view>
     </view>
@@ -33,7 +33,7 @@
       </view>
     </view>
   </navigator>
-  <view class="info-item">
+  <view class="info-item" bindtap='go2Knowing'>
     <view><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/message.png'></image></view>
     <view class="info-box">
       <view>一键查寝</view>
@@ -43,29 +43,11 @@
   <view class="info-item last-item">
     <view bindtap='searchStu'><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/search.png'></image></view>
     <view class="info-box">
-      <view><input data-name='name' placeholder='请输入姓名'></input></view>
-      <view class="src-result" bindtap='go2Update' bindlongtap='deleteStu'>
-        <view>姓名：陈佳峰</view>
-        <view>专业：信息工程</view>
-        <view>学号：13000000000</view>
-      </view>
-      <view class="src-result">
-        <view>姓名：陈佳峰</view>
-        <view>专业：信息工程</view>
-        <view>学号：13000000000</view>
+      <view><input data-name='name' placeholder='请输入姓名' bindinput='inputEdit'></input></view>
+      <view class="src-result" bindtap='go2Update' bindlongtap='deleteStu' bindtouchend='touchend' wx:for="{{srcResult}}" wx:key="{{item.user_id}}" data-info="{{item}}">
+        <view>姓名：{{item.name}}</view>
+        <view>专业：{{item.specialty}}</view>
+        <view>学号：{{item.user_id}}</view>
       </view>
     </view>
   </view>
-<!-- <navigator url="../allrecord/index">
-  <button type="primary">查看考勤记录</button>
-</navigator> -->
-<!-- <view>
-  <view>以下是此次您的人脸信息</view>
-  <view>模糊度范围：</view>
-  <view>光照范围：</view>
-  <view>遮挡范围：</view>
-  <view>人脸完整度：</view>
-  <view>人脸置信度：</view>
-  <view>人脸匹配程度：</view>
-  <view>活体分数值：</view>
-</view> -->

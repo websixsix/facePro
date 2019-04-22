@@ -73,6 +73,9 @@ Page({
       this.data.secret === '1022'&&
       this.data.form.character === "students"&&
       this.data.form.teacher_id) {
+
+        //判断user_id是否唯一
+
         db.collection('college').where({
           name: self.data.form.college
         }).get({
@@ -111,11 +114,12 @@ Page({
   createColl:function(){
     let self = this;
     return new Promise((resolve, reject) => {
-      db.collection('college').add({
+      wx.cloud.callFunction({
+        name:"addCollege",
         data: {
-          name: this.data.form.college
+          college: this.data.form.college
         },
-        success(res){
+        success(res) {
           resolve(res);
         }
       })

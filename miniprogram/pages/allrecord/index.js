@@ -8,16 +8,12 @@ Page({
    * 页面的初始数据
    */
   data: {
-    dateSet: '2019-03-17',
-    start: '',
-    end: '',
-    teacher_id:'',
     recordList: [],
-    month: '',
-    date: '',
-    year: '',
-    page:0,
-    attend_flag:true
+    eventName:'',
+    srcName:'',
+    srcResult:[],
+    checkCount:0,
+    checkedCount:0
   },
 
   /**
@@ -25,149 +21,68 @@ Page({
    */
   onLoad: function (options) {
     let self = this
-    const db = wx.cloud.database()
-    if (app.globalData.sceen === 'teacher') {
-      console.info('teacher')
-      db.collection('teachers').where({
-        _openid: app.globalData.openid,
-      }).get({
-        success(res) {
-          // res.data 包含该记录的数据
-          console.info(res.data[0])
-          self.setData({
-            teacher_id: res.data[0].user_id
+    self.setData({
+      eventName: app.globalData.pickEventName
+    }, () => {
+      wx.cloud.callFunction({
+        name:"searchEvent",
+        data:{
+          name:self.data.eventName
+        },
+        success(res){
+          console.info(res)
+          let arr = [];
+          let num = 0;
+          res.result.forEach(e => {
+            if (e.isChecked) {
+              num+=1;
+              let dateObj = new Date(e.date)
+              e.date = dateObj.toLocaleString();
+              arr.push(e);
+            } else {
+              arr.unshift(e);
+            }
           })
-          let now = new Date()
           self.setData({
-            month: now.getMonth(),
-            date: now.getDate(),
-            year: now.getFullYear(),
-            dateSet: now.getFullYear() + '年' + mStr + '月' + now.getDate() + '日',
-            start: (now.getFullYear() - 1) + '-' + (now.getMonth() + 1) + '-' + now.getDate(),
-            end: now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate(),
-          }, () => {
-            self.load()
+            recordList: arr,
+            checkCount: res.result.length,
+            checkedCount: num
+          },()=>{
+            self.searchRecord()
           })
         },
-        fail: (err) => {
+        fail(err){
           console.info(err)
         }
       })
-    }else if(app.globalData.sceen === 'student'){
-      console.info('student')
-      let now = new Date()
-      this.setData({
-        month: now.getMonth(),
-        date: now.getDate(),
-        year: now.getFullYear()
-      }, () => {
-        this.loadS()
-      })
-    }
+    })
   },
-  onReachBottom: function () {
-    if (app.globalData.sceen === 'teacher') {
-      this.load();
-    } else if (app.globalData.sceen === 'student') {
-      this.loadS();
-    }
-  },
+  onReachBottom: function () {},
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () { },
-  //查找数据库 -> 找出自己权限组
-  show2group: function (page) {
-    let self = this
-    let nowDate = new Date(this.data.year, this.data.month, this.data.date);
-    db.collection('verifyrecord').where({
-      teacher_id: self.data.teacher_id,
-      date: _.gt(nowDate)
-    }).skip(page * 20).limit(20)
-      .get({
-        success(res) {
-          // res.data 是包含以上定义的两条记录的数组
-          let arr = self.data.recordList
-          for (let i = 0; i < res.data.length; i++) {
-            res.data[i].date = res.data[i].date.toLocaleString()
-            arr.push(res.data[i])
-          }
-          self.setData({
-            recordList: arr
-          })
-        }
-      })
-  },
-  //分段加载全部数据
-  load: function () {
-    let self = this
-    let nowDate = new Date(this.data.year, this.data.month, this.data.date);
-    db.collection('verifyrecord').where({
-      teacher_id: self.data.teacher_id,
-      date: _.gt(nowDate)
-    }).count({
-      success(res) {
-        let total = res.total;
-        let index = self.data.page;
-        if (index > total) return;
-        self.show2groupS(index);
-        self.setData({
-          page: index + 1
-        })
-      }
-    })
-  },
-  //查找数据库 -> 找出自己权限组
-  show2groupS: function (page) {
-    let self = this
-    let nowDate = new Date(this.data.year, this.data.month, this.data.date);
-    db.collection('verifyrecord').where({
-      _openid: app.globalData.openid,
-      date: _.gt(nowDate)
-    }).skip(page * 20).limit(20)
-      .get({
-        success(res) {
-          // res.data 是包含以上定义的两条记录的数组
-          let arr = self.data.recordList
-          for (let i = 0; i < res.data.length; i++) {
-            res.data[i].date = res.data[i].date.toLocaleString()
-            arr.push(res.data[i])
-          }
-          self.setData({
-            recordList: arr
-          })
-          console.log(typeof self.data.recordList[0].date)
-        }
-      })
-  },
-  //分段加载全部数据
-  loadS: function () {
-    let self = this
-    let nowDate = new Date(this.data.year, this.data.month, this.data.date);
-    db.collection('verifyrecord').where({
-      _openid: app.globalData.openid,
-      date: _.gt(nowDate)
-    }).count({
-      success(res) {
-        let total = res.total;
-        let index = self.data.page; 
-        if(index > total) return;
-        self.show2groupS(index);
-        self.setData({
-          page: index+1
-        })
-      }
-    })
-  },
-  bindDateChange(e) {
-    console.log('picker发送选择改变，携带值为', e)
-    let date = e.detail.value;
-    let arr = date.split('-');
+  inputedit(e) {
     this.setData({
-      year: arr[0],
-      month: arr[1] - 1,
-      date: arr[2],
-      dateSet: arr[0] + '年' + arr[1] + '月' + arr[2] + '日'
+      srcName:e.detail.value
     })
   },
+  searchRecord: function () {
+    let self = this
+    let name = this.data.srcName
+    this.setData({
+      srcResult:[]
+    },()=>{
+      let arr = [];
+      self.data.recordList.forEach( rec => {
+        console.info(rec.name.indexOf(name))
+        if(rec.name.indexOf(name)>=0){
+          arr.push(rec)
+        }
+      })
+      self.setData({
+        srcResult:arr
+      })
+    })
+  }
 })

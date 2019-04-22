@@ -10,17 +10,23 @@ Page({
   data: {
     name: '',
     group_id: '',
-    groupList: [],
-    pageIndex: 0,
     user_id: '',
     college: '',
-    groupObj : {}
+    allCheck:0,
+    check:0,
+    srcResult: [],
+    allStuArr: [],
+    srcName: '',
+    lock:false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    wx.showLoading({
+      title: '加载中',
+    })
     let self = this
     db.collection('teachers').where({
       _openid: app.globalData.openid,
@@ -32,9 +38,11 @@ Page({
           group_id: res.data[0].group_id,
           user_id: res.data[0].user_id,
           college: res.data[0].college
+        },()=>{
+          self.checkEvent();
+          self.loadAllStu();
         })
         app.globalData.userInfo = res.data[0]
-        self.loadAll()
       },
       fail: (err) => {
         console.info(err)
@@ -49,100 +57,18 @@ Page({
   onReady: function () {
 
   },
-  //查找数据库 -> 找出自己权限组
-  show2group: function (page) {
-    let self = this
-    db.collection('students').where({
-      teacher_id: self.data.user_id
-    }).skip(page * 20).limit(20)
-      .get({
-        success(res) {
-          // res.data 是包含以上定义的两条记录的数组
-          let arr = self.data.groupList
-          let obj = self.data.groupObj
-          for (let i = 0; i < res.data.length; i++) {
-            let group = res.data[i]
-            if (!obj[group.group_id]) {
-              obj[group.group_id] = []
-              arr.push(group.group_id)
-              obj[group.group_id].push(group)
-            } else {
-              obj[group.group_id].push(group)
-            }
-          }
-          for(let o in obj){
-            console.info(o)
-          }
-          self.setData({
-            groupList: arr,
-            groupObj:obj
-          })
-          console.log(self.data.groupList)
-        }
-      })
-  },
-  //分段加载全部数据
-  loadAll: function () {
-    let self = this
-    db.collection('students').where({
-      teacher_id: self.data.user_id
-    }).count({
-      success(res) {
-        let total = res.total
-        for (let j = 0; j < total / 20; j++) {
-          self.show2group(j)
-        }
-      }
-    })
-  },
-  // 把不同分组的人分开显示
-  devStudent: function() {
-    let obj1 = {}
-    let group = self.data.groupList
-    for (let i = 0; i < self.data.groupList.length; i++) {
-      if (!obj[group[i]]) {
-        obj[group[i].group_id] = []
-        obj[group[i].group_id].push(group)
-      } else {
-        obj[group[i].group_id].push(group)
-      }
+  touchend: function () {
+    if (this.data.lock) {
+      //开锁
+      setTimeout(() => {
+        this.setData({ lock: false });
+      }, 100);
     }
-    console.info(obj)
-  },
-  setLimit: function (e) {
-    let self = this
-    let info = e.currentTarget.dataset.info
-    let name = info.name
-    wx.showModal({
-      title: '提示',
-      content: '将'+name+'设置为组长',
-      success(res) {
-        if (res.confirm) {
-          wx.showLoading({
-            title: '修改中',
-            mask: true
-          })
-          wx.cloud.callFunction({  
-            name: 'changeLimit', 
-            data: info,
-            success: res => {
-              wx.hideLoading()
-              wx.showToast({
-                title: '修改成功',
-                icon: 'success'
-              })
-            },
-            fail: err => {
-              console.info(err)
-            }
-          })
-        } else if (res.cancel) {
-          console.log('用户点击取消')
-        }
-      }
-    })
   },
   deleteStu:function(e) {
+    this.setData({
+      lock:true
+    })
     let self = this
     let info = e.currentTarget.dataset.info
     let name = info.name
@@ -181,11 +107,162 @@ Page({
     })
   },
   go2Update:function(e){
+    if (this.data.lock) return;
+    app.globalData.updateStuInfo = e.currentTarget.dataset.info
     wx.navigateTo({
       url: '../editinfo/index',
     })
   },
-  searchStu:function(){
+  loadAllStu:function(){
+    let self = this;
+    wx.cloud.callFunction({
+      name: 'crtAllStudents',
+      data: {
+        user_id: self.data.user_id
+      },
+      success: res => {
+        if (!res.result) {
+          return;
+        }
+        let arr = [];
+        res.result.forEach(e => {
+          arr.push(e)
+        })
+        self.setData({
+          allStuArr: arr
+        },()=>{
+          wx.hideLoading()
+        })
+      },
+      fail: err => {
+        console.info(err)
+      }
+    })
+  },
+  inputEdit: function (e) {
+    this.setData({
+      srcName: e.detail.value
+    })
+  },
+  searchStu: function () {
+    let self = this
+    let name = this.data.srcName
+    this.setData({
+      srcResult: []
+    }, () => {
+      let arr = [];
+      self.data.allStuArr.forEach(rec => {
+        if (rec.name.indexOf(name) >= 0) {
+          arr.push(rec)
+        }
+      })
+      self.setData({
+        srcResult: arr
+      })
+    })
+  },
+  go2Knowing:function(){
+    wx.showLoading({
+      title: '创建中',
+    })
+    let self = this;
+    let date = new Date();
+    let name = this.data.name + this.data.user_id + "查寝" + date.getFullYear()+(date.getMonth()+1)+date.getDate();
+    wx.cloud.callFunction({
+      name: 'createEvent',
+      data: {
+        name: name
+      },
+      success: res => {
+        
+        if (!res.result) {
+          wx.hideLoading()
+          wx.showToast({
+            title: '今日已查寝',
+            icon: 'none'
+          })
+          return;
+        }
+        self.createStudents(name);
+      },
+      fail: err => {
+        console.info(err)
+      }
+    })
+  },
 
+  //在事件集合下创建学生
+  createStudents: function (event) {
+    let self = this;
+    this.data.allStuArr.forEach(e => {
+      wx.cloud.callFunction({
+        name: 'addUserDB',
+        data:{
+          dbName: event,
+          dbData: {
+            isChecked: false,
+            name: e.name,
+            specialty: e.specialty,
+            user_id: e.user_id,
+            event: event.eventName
+          }
+        }
+      })
+    })
+    self.recallInEvent(event);
+  },
+  // 在事件集合里添加该事件
+  recallInEvent: function (event) {
+    let self = this;
+    // let date = new Date.getTime()
+    wx.cloud.callFunction({
+      name: 'addUserDB',
+      data: {
+        dbName: "events",
+        dbData: {
+          name: event,
+          teacher: self.data.name,
+          teacher_id: self.data.user_id,
+          limit: 30,
+          range: self.data.college,
+          date: new Date().getTime()
+        }
+      },
+      success(res){
+        wx.hideLoading()
+        wx.showToast({
+          title: '创建事件成功',
+          icon: 'success',
+          success() {
+            self.checkEvent()
+          }
+        })
+      },
+      fail(err){
+        console.info(err)
+      }
+    })
+  },
+  checkEvent(){
+    let self = this;
+    wx.cloud.callFunction({
+      name: "checkEvent",
+      data: {
+        name: self.data.name,
+        user_id: self.data.user_id
+      },
+      success(res) {
+        if (!res.result) {
+          return;
+        }
+        self.setData({
+          allCheck: res.result.allNum,
+          check: res.result.num
+        })
+      },
+      fail(err) {
+        console.info(err)
+      }
+    })
   }
 })

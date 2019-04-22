@@ -29,49 +29,22 @@
   </view>
   
   <view>
-    <button class="primary">搜索</button>
+    <button class="primary" bindtap='loadAll'>搜索</button>
   </view>
 </view>
 <view class="record">
   <view class="item">
     <view class="context">
-      <view><text>缺勤总次数统计：</text>24人</view>
+      <view><text>缺勤总次数统计：</text>{{unCheckCount}}次</view>
     </view>
   </view>
-  <view class="item">
+  <view class="item" wx:for="{{recordList}}" wx:key="{{index}}">
     <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
     <view class="context">
-      <view><text>姓名：</text>陈佳峰</view>
-      <view><text>异常缺勤次数：</text>3次</view>
-      <view><text>正常考勤次数：</text>38次</view>
-      <view><text>专业：</text>信息工程</view>
-    </view>
-  </view>
-  <view class="item">
-    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
-    <view class="context">
-      <view><text>姓名：</text>陈陈晨</view>
-      <view><text>缺勤次数：</text>2次</view>
-      <view><text>正常考勤次数：</text>39次</view>
-      <view><text>专业：</text>信息工程</view>
-    </view>
-  </view>
-  <view class="item">
-    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
-    <view class="context">
-      <view><text>姓名：</text>佳佳家</view>
-      <view><text>缺勤次数：</text>1次</view>
-      <view><text>正常考勤次数：</text>40次</view>
-      <view><text>专业：</text>信息工程</view>
-    </view>
-  </view>
-  <view class="item">
-    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
-    <view class="context">
-      <view><text>姓名：</text>风风风</view>
-      <view><text>缺勤次数：</text>0次</view>
-      <view><text>正常考勤次数：</text>41次</view>
-      <view><text>专业：</text>信息工程</view>
+      <view><text>姓名：</text>{{item.name}}</view>
+      <view><text>异常缺勤次数：</text>{{item.check}}次</view>
+      <view><text>正常考勤次数：</text>{{item.checked}}次</view>
+      <view><text>专业：</text>{{item.specialty}}</view>
     </view>
   </view>
 </view>

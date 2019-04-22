@@ -5,7 +5,7 @@
 <!--miniprogram/pages/recordtext/index.wxml-->
 <view class="logo">
   <image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/date.png"></image>
-  <text>事件名：电子工艺实训考勤</text>
+  <text>事件名：{{eventName}}</text>
 </view>
 <view class="section">
   <view class="name" style='display:flex;flex-direction:row;margin:0 40px'>
@@ -13,50 +13,24 @@
     <input value="{{form.name}}" bindinput='inputedit' data-name='name' placeholder='请输入姓名'></input>
   </view>
   <view>
-    <button class="primary">搜索</button>
+    <button class="primary" bindtap='searchRecord'>搜索</button>
   </view>
 </view>
-<view>此次未考勤2人，已考勤42人</view>
+<view>此次未考勤{{checkCount-checkedCount}}人，已考勤{{checkedCount}}人</view>
 <view class="record">
-  <view class="item">
+  <view class="item" wx:for="{{srcResult}}" wx:key="{{item._id}}">
     <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
     <view class="context">
-      <view><text>学生姓名：</text>陈佳峰</view>
-      <view><text>专业：</text>信息工程</view>
+      <view><text>学生姓名：</text>{{item.name}}</view>
+      <view><text>学号：</text>{{item.user_id}}</view>
+      <view><text>专业：</text>{{item.specialty}}</view>
       <view>
         <text>考勤状态：</text>
-        <text class="red" wx:if="{{attend_flag}}">未考勤</text>
-        <text class="green" wx:if="{{!attend_flag}}">已考勤</text>
+        <text class="red" wx:if="{{!item.isChecked}}">未考勤</text>
+        <text class="green" wx:if="{{item.isChecked}}">已考勤</text>
       </view>
-      <view wx:if="{{!attend_flag}}"><text>时间：</text>2019/3/14 11:47</view>
-      <view wx:if="{{!attend_flag}}"><text>地点：</text>福建省福州市闽侯县福建师范大学旗山校区实验楼</view>
-    </view>
-  </view>
-  <view class="item">
-    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
-    <view class="context">
-      <view><text>学生姓名：</text>陈佳</view>
-      <view><text>专业：</text>信息工程</view>
-      <view>
-        <text>考勤状态：</text>
-        <text class="red" wx:if="{{attend_flag}}">未考勤</text>
-        <text class="green" wx:if="{{!attend_flag}}">已考勤</text>
-      </view>
-      <view wx:if="{{!attend_flag}}"><text>时间：</text>2019/3/14 11:47</view>
-      <view wx:if="{{!attend_flag}}"><text>地点：</text>福建省福州市闽侯县福建师范大学旗山校区实验楼</view>
-    </view>
-  </view>
-  <view class="item">
-    <view class="tip"><image src='cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/stage.png'></image></view>
-    <view class="context">
-      <view><text>学生姓名：</text>陈峰</view>
-      <view><text>专业：</text>信息工程</view>
-      <view>
-        <text>考勤状态：</text>
-        <text class="green">已考勤</text>
-      </view>
-      <view><text>时间：</text>2019/3/14 11:47</view>
-      <view><text>地点：</text>福建省福州市闽侯县福建师范大学旗山校区实验楼</view>
+      <view wx:if="{{item.isChecked}}"><text>时间：</text>{{item.date}}</view>
+      <view wx:if="{{item.isChecked}}"><text>地点：</text>{{item.location}}</view>
     </view>
   </view>
 </view>

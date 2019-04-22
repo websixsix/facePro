@@ -17,17 +17,17 @@
     </view>
   </picker>
   <view>
-    <button class="primary">搜索</button>
+    <button class="primary" bindtap='search'>搜索</button>
   </view>
 </view>
 <view>
-  <view class="event-item" bindtap='go2Record'>
+  <view class="event-item" bindtap='go2Record' wx:for="{{recordList}}" wx:key="{{item._id}}" data-name="{{item.name}}">
     <view><image src="cloud://face-rec-a9086b.6661-face-rec-a9086b/assets/homework.png"></image></view>
     <view>
-      <view><text>事件起因：</text>工程光学</view>
-      <view><text>未签到人数：</text>0</view>
-      <view><text>发起时间：</text>2019/3/14 15:29:45</view>
-      <view><text>时间限制：</text>5 min</view>
+      <view><text>事件起因：</text>{{item.name}}</view>
+      <view><text>签到对象：</text>{{item.range}}</view>
+      <view><text>发起时间：</text>{{item.date}}</view>
+      <view><text>时间限制：</text>{{item.limit}} min</view>
     </view>
   </view>
 </view>
